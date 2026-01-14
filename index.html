@@ -25,9 +25,9 @@
     body{
       margin:0; font-family:var(--font); color:var(--text);
       background:
-        radial-gradient(900px 600px at 15% 12%, rgba(29,79,255,0.25), transparent 62%),
-        radial-gradient(900px 600px at 85% 20%, rgba(0,168,107,0.22), transparent 62%),
-        radial-gradient(800px 520px at 50% 95%, rgba(255,140,0,0.18), transparent 62%),
+        radial-gradient(900px 600px at 15% 12%, rgba(29,79,255,0.28), transparent 62%),
+        radial-gradient(900px 600px at 85% 20%, rgba(0,168,107,0.24), transparent 62%),
+        radial-gradient(800px 520px at 50% 95%, rgba(255,140,0,0.20), transparent 62%),
         linear-gradient(180deg, var(--bg1), var(--bg2));
     }
     .app{min-height:100%; display:flex; flex-direction:column}
@@ -49,13 +49,20 @@
     .small{font-size:12px}
     .how{margin:10px 0 0; padding-left:18px; line-height:1.6}
     .grid{display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-top: 14px;}
-    .sitCard{border:1px solid var(--line); border-radius:16px; background:rgba(255,255,255,0.90); padding:14px}
+    .sitCard{
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px;
+      overflow:hidden;
+      position:relative;
+      background: rgba(255,255,255,0.92);
+    }
     .sitTitle{font-weight:1000; margin-bottom:6px}
     .sitMeta{color:var(--muted); font-size:12px; margin-bottom:10px}
     .levelRow{display:flex; gap:8px; flex-wrap:wrap}
     .levelBtn{
-      border:1px solid rgba(29,79,255,0.35);
-      background: rgba(29,79,255,0.10);
+      border:1px solid rgba(29,79,255,0.42);
+      background: rgba(29,79,255,0.14);
       color: var(--blue2);
       border-radius:999px;
       padding:8px 10px;
@@ -63,9 +70,9 @@
       font-weight:1000;
       transition: transform .10s ease, background .10s ease, border-color .10s ease;
     }
-    .levelBtn:hover{transform: translateY(-1px); background: rgba(29,79,255,0.16); border-color: rgba(29,79,255,0.55)}
+    .levelBtn:hover{transform: translateY(-1px); background: rgba(29,79,255,0.20); border-color: rgba(29,79,255,0.70)}
     .row{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; align-items:center}
-    .pill{padding:8px 10px; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,0.80); font-size:12px; color:var(--muted); font-weight:800}
+    .pill{padding:8px 10px; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,0.85); font-size:12px; color:var(--muted); font-weight:800}
     .btn{
       border:1px solid var(--line);
       background:#fff;
@@ -78,8 +85,8 @@
     }
     .btn:hover{transform: translateY(-1px); border-color: rgba(8,12,24,0.22)}
     .btn.primary{
-      background: linear-gradient(180deg, rgba(29,79,255,0.18), rgba(29,79,255,0.12));
-      border-color: rgba(29,79,255,0.45);
+      background: linear-gradient(180deg, rgba(29,79,255,0.22), rgba(29,79,255,0.14));
+      border-color: rgba(29,79,255,0.55);
       color: var(--blue2);
     }
     .btn.ghost{background:transparent}
@@ -92,14 +99,14 @@
     .timer,.score{font-weight:1000}
     .progress{display:flex; align-items:center; gap:10px; min-width:240px; flex:1}
     .bar{height:10px; background: rgba(8,12,24,0.06); border:1px solid var(--line); border-radius:999px; flex:1; overflow:hidden}
-    .fill{height:100%; width:0%; background: rgba(0,168,107,0.75)}
+    .fill{height:100%; width:0%; background: rgba(0,168,107,0.78)}
     .chat{display:flex; flex-direction:column; gap:12px}
-    .bubble{max-width: 900px; padding: 12px; border-radius:16px; border:1px solid var(--line); background: rgba(255,255,255,0.92)}
+    .bubble{max-width: 900px; padding: 12px; border-radius:16px; border:1px solid var(--line); background: rgba(255,255,255,0.94)}
     .bubble.examiner{align-self:flex-start}
-    .bubble.you{align-self:flex-end; background: rgba(0,168,107,0.10); border-color: rgba(0,168,107,0.35)}
+    .bubble.you{align-self:flex-end; background: rgba(0,168,107,0.10); border-color: rgba(0,168,107,0.40)}
     .bubbleTop{display:flex; justify-content:space-between; gap:10px; align-items:center; margin-bottom:6px}
-    .badge{font-size:11px; font-weight:1000; padding:4px 8px; border-radius:999px; border:1px solid var(--line); color:var(--muted); background:rgba(255,255,255,0.85)}
-    .badge.you{color: rgba(0,168,107,0.98); border-color: rgba(0,168,107,0.35); background: rgba(0,168,107,0.12)}
+    .badge{font-size:11px; font-weight:1000; padding:4px 8px; border-radius:999px; border:1px solid var(--line); color:var(--muted); background:rgba(255,255,255,0.90)}
+    .badge.you{color: rgba(0,168,107,0.98); border-color: rgba(0,168,107,0.40); background: rgba(0,168,107,0.14)}
     .lineText{line-height:1.38}
     .blanks{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
     .blankWrap{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
@@ -111,16 +118,16 @@
       background:#fff;
       color:var(--text);
       outline:none;
-      font-weight:800;
+      font-weight:900;
     }
-    .blank:focus{border-color: rgba(29,79,255,0.55); box-shadow: 0 0 0 4px rgba(29,79,255,0.16)}
+    .blank:focus{border-color: rgba(29,79,255,0.60); box-shadow: 0 0 0 4px rgba(29,79,255,0.16)}
     .hintText{font-size:12px; color:var(--muted)}
     .cue{font-size:12px; color:var(--muted); margin-top:6px}
     .resultsGrid{display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap:12px; margin:14px 0 4px}
     .stat{border:1px solid var(--line); background:rgba(255,255,255,0.92); border-radius:16px; padding:12px}
     .label{color:var(--muted); font-size:12px}
     .value{font-weight:1000; font-size:22px; margin-top:4px}
-    .input{padding:10px 12px; border-radius:14px; border:1px solid var(--line); background:#fff; color:var(--text); outline:none; min-width:220px; font-weight:800}
+    .input{padding:10px 12px; border-radius:14px; border:1px solid var(--line); background:#fff; color:var(--text); outline:none; min-width:220px; font-weight:900}
     .details{margin-top:14px; border:1px solid var(--line); border-radius:16px; padding:10px 12px; background: rgba(8,12,24,0.03)}
     .details summary{cursor:pointer; font-weight:1000}
     .correction{margin-top:10px; padding-top:10px; border-top:1px solid var(--line)}
@@ -265,6 +272,7 @@
   </div>
 
   <script>
+    // ===== DATA =====
     var DATA = {
       "situations": [
         {"id":"s1","title":"SITUACIÓN 1: ALOJAMIENTO","turns":[
@@ -340,14 +348,45 @@
       ]
     };
 
+    // Themed tile backgrounds (SVG icons, no extra files needed)
+    var TILE_BG = {
+      s1: "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='500' viewBox='0 0 900 500'><rect width='900' height='500' fill='white'/><g fill='none' stroke='%231d4fff' stroke-width='18' stroke-linecap='round' stroke-linejoin='round' opacity='0.26'><path d='M160 310V220c0-30 25-55 55-55h330c30 0 55 25 55 55v90'/><path d='M140 310h620'/><path d='M260 220h90'/><path d='M450 220h90'/><path d='M230 310v-60'/><path d='M520 310v-60'/></g></svg>\")",
+      s2: "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='500' viewBox='0 0 900 500'><rect width='900' height='500' fill='white'/><g fill='none' stroke='%2300a86b' stroke-width='18' stroke-linecap='round' stroke-linejoin='round' opacity='0.26'><rect x='210' y='130' width='480' height='270' rx='24'/><path d='M170 400h560'/><path d='M300 190h300'/><path d='M300 240h240'/></g></svg>\")",
+      s3: "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='500' viewBox='0 0 900 500'><rect width='900' height='500' fill='white'/><g fill='none' stroke='%23ff8c00' stroke-width='18' stroke-linecap='round' stroke-linejoin='round' opacity='0.26'><path d='M220 390l230-250 230 250'/><path d='M330 390V250h240v140'/><path d='M250 390h400'/></g></svg>\")",
+      s4: "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='500' viewBox='0 0 900 500'><rect width='900' height='500' fill='white'/><g fill='none' stroke='%2300a86b' stroke-width='18' stroke-linecap='round' stroke-linejoin='round' opacity='0.26'><path d='M470 380c120-20 190-120 190-220-110 20-210 70-240 170-10 35-5 55 50 50z'/><path d='M420 380c-110-20-180-110-180-210 105 20 195 65 225 155 12 35 8 60-45 55z'/><path d='M450 390V170'/></g></svg>\")",
+      s5: "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='500' viewBox='0 0 900 500'><rect width='900' height='500' fill='white'/><g fill='none' stroke='%231d4fff' stroke-width='18' stroke-linecap='round' stroke-linejoin='round' opacity='0.26'><path d='M250 330l40-90c10-20 30-35 52-35h216c22 0 42 15 52 35l40 90'/><path d='M230 330h440'/><circle cx='320' cy='330' r='42'/><circle cx='580' cy='330' r='42'/><path d='M330 255h240'/></g></svg>\")"
+    };
+
     function ready(fn){ if(document.readyState!=="loading") fn(); else document.addEventListener("DOMContentLoaded", fn); }
 
     ready(function(){
       function $(s){ return document.querySelector(s); }
       function esc(s){ return String(s).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c])); }
 
+      // Visible error banner (prevents “silent dead buttons”)
+      window.addEventListener("error", function(){
+        try{
+          var m=document.createElement("div");
+          m.style.position="fixed";
+          m.style.left="12px";
+          m.style.right="12px";
+          m.style.bottom="12px";
+          m.style.padding="12px 14px";
+          m.style.borderRadius="14px";
+          m.style.background="rgba(214,31,44,0.95)";
+          m.style.color="white";
+          m.style.fontWeight="1000";
+          m.style.zIndex="9999";
+          m.textContent="JavaScript error on this device. Refresh. If it continues, tell your teacher.";
+          document.body.appendChild(m);
+        }catch(_){}
+      }, { once:true });
+
       var screens = { home: $("#screenHome"), play: $("#screenPlay"), results: $("#screenResults") };
-      function showScreen(name){ Object.keys(screens).forEach(k=>screens[k].classList.remove("active")); screens[name].classList.add("active"); }
+      function showScreen(name){
+        Object.keys(screens).forEach(k=>screens[k].classList.remove("active"));
+        screens[name].classList.add("active");
+      }
 
       var opts = { strictAccents:true, allowEnyeAsN:true, lenientPunct:true, showHints:true };
       function loadOptions(){
@@ -364,27 +403,27 @@
       function stripAccents(s){ return s.split("").map(ch=>ACC[ch]||ch).join(""); }
 
       function normalize(s){
-        var out = (s==null?"":String(s)).trim();
-        if(opts.lenientPunct) out = out.replace(/[¿?¡!.,;:()\[\]{}"“”'’]/g," ");
-        out = out.replace(/\s+/g," ").trim().toLowerCase();
-        if(opts.allowEnyeAsN) out = out.replace(/ñ/g,"n");
-        if(!opts.strictAccents) out = stripAccents(out);
+        var out=(s==null?"":String(s)).trim();
+        if(opts.lenientPunct) out=out.replace(/[¿?¡!.,;:()\[\]{}"“”'’]/g," ");
+        out=out.replace(/\s+/g," ").trim().toLowerCase();
+        if(opts.allowEnyeAsN) out=out.replace(/ñ/g,"n");
+        if(!opts.strictAccents) out=stripAccents(out);
         return out;
       }
 
       function parseAlternatives(raw){
-        var cleaned = String(raw||"").trim();
-        var parts = cleaned.split("/").map(x=>x.trim()).filter(Boolean);
+        var cleaned=String(raw||"").trim();
+        var parts=cleaned.split("/").map(x=>x.trim()).filter(Boolean);
         return parts.length<=1 ? [cleaned] : parts;
       }
       function isMatch(user, expectedRaw){
-        var u = normalize(user);
-        var alts = parseAlternatives(expectedRaw).map(x=>normalize(x));
+        var u=normalize(user);
+        var alts=parseAlternatives(expectedRaw).map(x=>normalize(x));
         return alts.some(a=>a===u);
       }
       function tokenSimilarity(a,b){
-        var A = normalize(a).split(" ").filter(Boolean);
-        var B = normalize(b).split(" ").filter(Boolean);
+        var A=normalize(a).split(" ").filter(Boolean);
+        var B=normalize(b).split(" ").filter(Boolean);
         if(!A.length && !B.length) return 1;
         var setA={}, setB={}; A.forEach(x=>setA[x]=1); B.forEach(x=>setB[x]=1);
         var inter=0, uni=0;
@@ -393,10 +432,10 @@
         return uni===0?0:inter/uni;
       }
 
-      var STOP = {"el":1,"la":1,"los":1,"las":1,"un":1,"una":1,"unos":1,"unas":1,"y":1,"o":1,"a":1,"de":1,"del":1,"al":1,"que":1,"en":1,"por":1,"para":1,"con":1,"sin":1,"es":1,"estoy":1,"estas":1,"esta":1,"está":1,"son":1,"soy":1,"eres":1,"se":1,"me":1,"te":1,"mi":1,"tu":1,"su":1,"sus":1,"lo":1,"le":1,"les":1,"ya":1,"muy":1,"más":1,"mas":1,"pero":1,"porque":1,"como":1,"cuando":1,"donde":1,"qué":1,"si":1,"no":1,"sí":1,"pues":1,"bueno":1};
+      var STOP={"el":1,"la":1,"los":1,"las":1,"un":1,"una":1,"unos":1,"unas":1,"y":1,"o":1,"a":1,"de":1,"del":1,"al":1,"que":1,"en":1,"por":1,"para":1,"con":1,"sin":1,"es":1,"estoy":1,"estas":1,"esta":1,"está":1,"son":1,"soy":1,"eres":1,"se":1,"me":1,"te":1,"mi":1,"tu":1,"su":1,"sus":1,"lo":1,"le":1,"les":1,"ya":1,"muy":1,"más":1,"mas":1,"pero":1,"porque":1,"como":1,"cuando":1,"donde":1,"qué":1,"si":1,"no":1,"sí":1,"pues":1,"bueno":1};
 
       function mulberry32(a){ return function(){ var t=a+=0x6D2B79F5; t=Math.imul(t^(t>>>15),t|1); t^=t+Math.imul(t^(t>>>7),t|61); return ((t^(t>>>14))>>>0)/4294967296; }; }
-      var SP_WORD = /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+$/;
+      var SP_WORD=/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+$/;
 
       function makeCloze(text, blanksWanted, seed){
         var rng=mulberry32(seed);
@@ -413,7 +452,10 @@
           if(STOP[wn]) continue;
           cand.push({idx:i, raw:w});
         }
-        for(var j=cand.length-1;j>0;j--){ var k=Math.floor(rng()*(j+1)); var tmp=cand[j]; cand[j]=cand[k]; cand[k]=tmp; }
+        for(var j=cand.length-1;j>0;j--){
+          var k=Math.floor(rng()*(j+1));
+          var tmp=cand[j]; cand[j]=cand[k]; cand[k]=tmp;
+        }
         var chosen=cand.slice(0, Math.max(0, blanksWanted));
         var chosenIdx={}; chosen.forEach(c=>chosenIdx[c.idx]=1);
 
@@ -438,6 +480,7 @@
       }
 
       var current={ situation:null, level:1, seed:12345, startMs:0, timerId:null, blanks:[], hintsUsed:0, lastResult:null };
+
       function formatTime(ms){
         var s=Math.max(0, Math.floor(ms/1000));
         var m=Math.floor(s/60);
@@ -477,24 +520,38 @@
       function buildHome(){
         var grid=$("#situationGrid");
         grid.innerHTML="";
+
         DATA.situations.forEach(s=>{
           var youLines=s.turns.filter(t=>t.speaker==="YOU").length;
+
           var card=document.createElement("div");
           card.className="sitCard";
+
+          // Apply themed “background image”
+          var bg = TILE_BG[s.id];
+          if (bg) {
+            card.style.backgroundImage =
+              "linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.84))," + bg;
+            card.style.backgroundSize = "cover";
+            card.style.backgroundPosition = "center";
+          }
+
           card.innerHTML =
             '<div class="sitTitle">'+esc(s.title)+'</div>'+
             '<div class="sitMeta">'+s.turns.length+' lines · '+youLines+' YOU lines</div>'+
             '<div class="levelRow">'+[1,2,3,4,5].map(l=>(
               '<button class="levelBtn" type="button" data-sit="'+s.id+'" data-lvl="'+l+'">Level '+l+'</button>'
             )).join("")+'</div>';
+
           grid.appendChild(card);
         });
 
+        // One click handler for all Level buttons
         grid.addEventListener("click", function(e){
           var btn = e.target.closest(".levelBtn");
           if(!btn) return;
           startGame(btn.getAttribute("data-sit"), parseInt(btn.getAttribute("data-lvl"),10));
-        });
+        }, { once: true }); // avoid double-binding if buildHome ever runs again
       }
 
       var activeBlankId=0;
@@ -547,15 +604,14 @@
             '<span class="mini">Line '+(idx+1)+'</span>';
           bubble.appendChild(top);
 
-         // Show the full line for EXAMINER always.
-// For YOU: show the full line only on levels 4–5 (when they write the whole thing).
-if (t.speaker === "E" || current.level >= 4) {
-  var line=document.createElement("div");
-  line.className="lineText";
-  line.textContent=t.text;
-  bubble.appendChild(line);
-}
-
+          // ✅ FIX: Don’t show full YOU line on levels 1–3 (prevents copying).
+          // Show full line for EXAMINER always, and for YOU only on levels 4–5.
+          if (t.speaker === "E" || current.level >= 4) {
+            var line=document.createElement("div");
+            line.className="lineText";
+            line.textContent=t.text;
+            bubble.appendChild(line);
+          }
 
           if(t.speaker==="YOU"){
             if(current.level<=3){
@@ -671,7 +727,7 @@ if (t.speaker === "E" || current.level >= 4) {
         if(!Rec){ alert("Voice input not supported here. Try Chrome/Edge."); return; }
         var rec=new Rec(); rec.lang="es-ES"; rec.interimResults=false; rec.maxAlternatives=1;
         var target=current.blanks.find(b=>b.id===activeBlankId) || current.blanks[0];
-        if(!target) return;
+        if(!target || !target.input) return;
         rec.onresult=(ev)=>{
           var text = ev.results && ev.results[0] && ev.results[0][0] ? ev.results[0][0].transcript : "";
           target.input.value=String(text).trim();
