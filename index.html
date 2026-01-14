@@ -1,0 +1,128 @@
+<!-- index.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Leaving Cert Role Play Cloze Trainer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">🎤</div>
+        <div>
+          <div class="title">Role Play Cloze Trainer</div>
+          <div class="subtitle">Leaving Cert Spanish · practise your “YOU” lines</div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="btnHome" class="btn ghost">Home</button>
+        <button id="btnHow" class="btn ghost">How it works</button>
+        <button id="btnScores" class="btn ghost">High Scores</button>
+      </div>
+    </header>
+
+    <main class="main">
+      <section id="screenHome" class="screen active">
+        <div class="card">
+          <h2>Choose a situation</h2>
+          <p class="muted">Pick the role play you want to practise. Then choose Level 1–5.</p>
+          <div class="grid" id="situationGrid"></div>
+
+          <div class="row">
+            <div class="pill">✅ Typing mode</div>
+            <div class="pill">🔊 Read aloud</div>
+            <div class="pill">🎙️ Voice input (Chrome/Edge best)</div>
+            <div class="pill">🏆 Local high scores</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Options</h3>
+          <div class="options">
+            <label class="opt"><input type="checkbox" id="optStrictAccents" checked /> Strict accents (á, é, í, ó, ú, ü) required</label>
+            <label class="opt"><input type="checkbox" id="optAllowEnyeAsN" checked /> Allow ñ typed as n</label>
+            <label class="opt"><input type="checkbox" id="optLenientPunct" checked /> Ignore punctuation and extra spaces</label>
+            <label class="opt"><input type="checkbox" id="optShowHints" checked /> Allow hints (small point penalty)</label>
+          </div>
+        </div>
+      </section>
+
+      <section id="screenPlay" class="screen">
+        <div class="card playHeader">
+          <div>
+            <div class="kicker" id="playKicker">Situation · Level</div>
+            <h2 id="playTitle">—</h2>
+            <div class="muted" id="playDesc">Fill in the missing parts of the green “YOU” lines.</div>
+          </div>
+
+          <div class="playBtns">
+            <button id="btnSpeakExaminer" class="btn">🔊 Read examiner</button>
+            <button id="btnSpeakAll" class="btn">🔊 Read all</button>
+            <button id="btnVoice" class="btn">🎙️ Voice to fill</button>
+            <button id="btnSubmit" class="btn primary">Submit</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="statusbar">
+            <div class="timer">⏱️ <span id="time">0:00</span></div>
+            <div class="progress">
+              <div class="bar"><div class="fill" id="progressFill"></div></div>
+              <div class="muted" id="progressText">0 / 0</div>
+            </div>
+            <div class="score">⭐ <span id="liveScore">0</span></div>
+          </div>
+
+          <div class="chat" id="chat"></div>
+        </div>
+
+        <div class="card compact">
+          <div class="muted small">Tip: Click any blank to focus it. Use 🎙️ voice to fill the currently focused blank.</div>
+        </div>
+      </section>
+
+      <section id="screenResults" class="screen">
+        <div class="card">
+          <h2>Results</h2>
+          <div class="resultsGrid">
+            <div class="stat"><div class="label">Score</div><div class="value" id="finalScore">0</div></div>
+            <div class="stat"><div class="label">Accuracy</div><div class="value" id="finalAcc">0%</div></div>
+            <div class="stat"><div class="label">Time</div><div class="value" id="finalTime">0:00</div></div>
+            <div class="stat"><div class="label">Hints used</div><div class="value" id="finalHints">0</div></div>
+          </div>
+
+          <div class="row gap">
+            <input id="playerName" class="input" maxlength="18" placeholder="Name for high score (optional)" />
+            <button id="btnSaveScore" class="btn primary">Save score</button>
+            <button id="btnRetry" class="btn">Try again</button>
+            <button id="btnHome2" class="btn ghost">Home</button>
+          </div>
+
+          <details class="details">
+            <summary>Show corrections</summary>
+            <div id="corrections"></div>
+          </details>
+        </div>
+      </section>
+
+      <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+        <div class="modalCard">
+          <div class="modalTop">
+            <div class="modalTitle" id="modalTitle">—</div>
+            <button class="btn ghost" id="btnCloseModal">✕</button>
+          </div>
+          <div class="modalBody" id="modalBody"></div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer"><span>Snappy Synge Street Games</span></footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
