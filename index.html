@@ -547,10 +547,15 @@
             '<span class="mini">Line '+(idx+1)+'</span>';
           bubble.appendChild(top);
 
-          var line=document.createElement("div");
-          line.className="lineText";
-          line.textContent=t.text;
-          bubble.appendChild(line);
+         // Show the full line for EXAMINER always.
+// For YOU: show the full line only on levels 4–5 (when they write the whole thing).
+if (t.speaker === "E" || current.level >= 4) {
+  var line=document.createElement("div");
+  line.className="lineText";
+  line.textContent=t.text;
+  bubble.appendChild(line);
+}
+
 
           if(t.speaker==="YOU"){
             if(current.level<=3){
