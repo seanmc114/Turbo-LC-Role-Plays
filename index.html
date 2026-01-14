@@ -19,25 +19,34 @@
       </div>
 
       <div class="controls">
-        <button id="btnHome" class="btn ghost">Home</button>
-        <button id="btnHow" class="btn ghost">How it works</button>
-        <button id="btnScores" class="btn ghost">High Scores</button>
+        <button id="btnHome" class="btn ghost" type="button">Home</button>
+        <button id="btnHow" class="btn ghost" type="button">How to play</button>
+        <button id="btnScores" class="btn ghost" type="button">High Scores</button>
       </div>
     </header>
 
     <main class="main">
       <section id="screenHome" class="screen active">
         <div class="card">
-          <h2>Choose a situation</h2>
-          <p class="muted">Pick the role play you want to practise. Then choose Level 1–5.</p>
-          <div class="grid" id="situationGrid"></div>
-
+          <h2>How to play</h2>
+          <ol class="how">
+            <li><strong>Pick a situation</strong> below.</li>
+            <li>Click a <strong>Level</strong> (1 is easiest → 5 is hardest).</li>
+            <li>Fill the blanks (or write the full line on levels 4–5).</li>
+            <li>Press <strong>Submit</strong> to get your score + corrections.</li>
+          </ol>
           <div class="row">
-            <div class="pill">✅ Typing mode</div>
+            <div class="pill">✅ Typing</div>
             <div class="pill">🔊 Read aloud</div>
             <div class="pill">🎙️ Voice input (Chrome/Edge best)</div>
-            <div class="pill">🏆 Local high scores</div>
+            <div class="pill">🏆 High scores (this device)</div>
           </div>
+        </div>
+
+        <div class="card">
+          <h2>Choose a situation</h2>
+          <p class="muted">Each card has Level buttons — click one to start immediately.</p>
+          <div class="grid" id="situationGrid"></div>
         </div>
 
         <div class="card">
@@ -49,6 +58,12 @@
             <label class="opt"><input type="checkbox" id="optShowHints" checked /> Allow hints (small point penalty)</label>
           </div>
         </div>
+
+        <noscript>
+          <div class="card danger">
+            This game needs JavaScript enabled to work.
+          </div>
+        </noscript>
       </section>
 
       <section id="screenPlay" class="screen">
@@ -60,10 +75,10 @@
           </div>
 
           <div class="playBtns">
-            <button id="btnSpeakExaminer" class="btn">🔊 Read examiner</button>
-            <button id="btnSpeakAll" class="btn">🔊 Read all</button>
-            <button id="btnVoice" class="btn">🎙️ Voice to fill</button>
-            <button id="btnSubmit" class="btn primary">Submit</button>
+            <button id="btnSpeakExaminer" class="btn" type="button">🔊 Read examiner</button>
+            <button id="btnSpeakAll" class="btn" type="button">🔊 Read all</button>
+            <button id="btnVoice" class="btn" type="button">🎙️ Voice to fill</button>
+            <button id="btnSubmit" class="btn primary" type="button">Submit</button>
           </div>
         </div>
 
@@ -81,7 +96,7 @@
         </div>
 
         <div class="card compact">
-          <div class="muted small">Tip: Click any blank to focus it. Use 🎙️ voice to fill the currently focused blank.</div>
+          <div class="muted small">Tip: Click any blank to focus it. Use 🎙️ voice to fill the currently focused blank/box.</div>
         </div>
       </section>
 
@@ -97,9 +112,9 @@
 
           <div class="row gap">
             <input id="playerName" class="input" maxlength="18" placeholder="Name for high score (optional)" />
-            <button id="btnSaveScore" class="btn primary">Save score</button>
-            <button id="btnRetry" class="btn">Try again</button>
-            <button id="btnHome2" class="btn ghost">Home</button>
+            <button id="btnSaveScore" class="btn primary" type="button">Save score</button>
+            <button id="btnRetry" class="btn" type="button">Try again</button>
+            <button id="btnHome2" class="btn ghost" type="button">Home</button>
           </div>
 
           <details class="details">
@@ -113,7 +128,7 @@
         <div class="modalCard">
           <div class="modalTop">
             <div class="modalTitle" id="modalTitle">—</div>
-            <button class="btn ghost" id="btnCloseModal">✕</button>
+            <button class="btn ghost" id="btnCloseModal" type="button">✕</button>
           </div>
           <div class="modalBody" id="modalBody"></div>
         </div>
