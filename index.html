@@ -1,11 +1,140 @@
-<!-- index.html -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Leaving Cert Role Play Cloze Trainer</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Role Play Cloze Trainer</title>
+  <style>
+    :root{
+      --bg1:#f2f6ff; --bg2:#eaf0ff;
+      --card: rgba(255,255,255,0.92);
+      --text: rgba(8,12,24,0.94);
+      --muted: rgba(8,12,24,0.62);
+      --line: rgba(8,12,24,0.14);
+      --green:#00a86b;
+      --blue:#1d4fff;
+      --blue2:#0b2bbd;
+      --bad:#d61f2c;
+      --good:#00a86b;
+      --shadow: 0 18px 60px rgba(10,15,30,0.16);
+      --radius: 18px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:var(--font); color:var(--text);
+      background:
+        radial-gradient(900px 600px at 15% 12%, rgba(29,79,255,0.25), transparent 62%),
+        radial-gradient(900px 600px at 85% 20%, rgba(0,168,107,0.22), transparent 62%),
+        radial-gradient(800px 520px at 50% 95%, rgba(255,140,0,0.18), transparent 62%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+    }
+    .app{min-height:100%; display:flex; flex-direction:column}
+    .topbar{display:flex; justify-content:space-between; align-items:center; padding:18px 18px 10px; gap:14px; flex-wrap:wrap}
+    .brand{display:flex; align-items:center; gap:12px}
+    .logo{width:44px; height:44px; display:grid; place-items:center; background:#fff; border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow)}
+    .title{font-weight:1000}
+    .subtitle{color:var(--muted); font-size:13px; margin-top:2px}
+    .controls{display:flex; gap:10px; flex-wrap:wrap}
+    .main{flex:1; padding: 6px 18px 22px; max-width: 1100px; width:100%; margin:0 auto}
+    .screen{display:none}
+    .screen.active{display:block}
+    .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow); margin:14px 0}
+    .card.compact{padding:12px}
+    h2{margin:0 0 10px; font-size:22px}
+    h3{margin:0 0 10px; font-size:18px}
+    p{margin:6px 0 0}
+    .muted{color:var(--muted)}
+    .small{font-size:12px}
+    .how{margin:10px 0 0; padding-left:18px; line-height:1.6}
+    .grid{display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-top: 14px;}
+    .sitCard{border:1px solid var(--line); border-radius:16px; background:rgba(255,255,255,0.90); padding:14px}
+    .sitTitle{font-weight:1000; margin-bottom:6px}
+    .sitMeta{color:var(--muted); font-size:12px; margin-bottom:10px}
+    .levelRow{display:flex; gap:8px; flex-wrap:wrap}
+    .levelBtn{
+      border:1px solid rgba(29,79,255,0.35);
+      background: rgba(29,79,255,0.10);
+      color: var(--blue2);
+      border-radius:999px;
+      padding:8px 10px;
+      cursor:pointer;
+      font-weight:1000;
+      transition: transform .10s ease, background .10s ease, border-color .10s ease;
+    }
+    .levelBtn:hover{transform: translateY(-1px); background: rgba(29,79,255,0.16); border-color: rgba(29,79,255,0.55)}
+    .row{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; align-items:center}
+    .pill{padding:8px 10px; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,0.80); font-size:12px; color:var(--muted); font-weight:800}
+    .btn{
+      border:1px solid var(--line);
+      background:#fff;
+      color: var(--text);
+      border-radius:14px;
+      padding:10px 12px;
+      cursor:pointer;
+      transition: transform .10s ease, border-color .10s ease;
+      font-weight:1000;
+    }
+    .btn:hover{transform: translateY(-1px); border-color: rgba(8,12,24,0.22)}
+    .btn.primary{
+      background: linear-gradient(180deg, rgba(29,79,255,0.18), rgba(29,79,255,0.12));
+      border-color: rgba(29,79,255,0.45);
+      color: var(--blue2);
+    }
+    .btn.ghost{background:transparent}
+    .options{display:grid; gap:8px}
+    .opt{display:flex; gap:10px; align-items:center; color:var(--muted)}
+    .playHeader{display:flex; justify-content:space-between; align-items:flex-start; gap:14px; flex-wrap:wrap}
+    .kicker{font-size:12px; color:var(--muted); margin-bottom:4px}
+    .playBtns{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+    .statusbar{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; padding-bottom:12px; border-bottom:1px solid var(--line); margin-bottom:12px}
+    .timer,.score{font-weight:1000}
+    .progress{display:flex; align-items:center; gap:10px; min-width:240px; flex:1}
+    .bar{height:10px; background: rgba(8,12,24,0.06); border:1px solid var(--line); border-radius:999px; flex:1; overflow:hidden}
+    .fill{height:100%; width:0%; background: rgba(0,168,107,0.75)}
+    .chat{display:flex; flex-direction:column; gap:12px}
+    .bubble{max-width: 900px; padding: 12px; border-radius:16px; border:1px solid var(--line); background: rgba(255,255,255,0.92)}
+    .bubble.examiner{align-self:flex-start}
+    .bubble.you{align-self:flex-end; background: rgba(0,168,107,0.10); border-color: rgba(0,168,107,0.35)}
+    .bubbleTop{display:flex; justify-content:space-between; gap:10px; align-items:center; margin-bottom:6px}
+    .badge{font-size:11px; font-weight:1000; padding:4px 8px; border-radius:999px; border:1px solid var(--line); color:var(--muted); background:rgba(255,255,255,0.85)}
+    .badge.you{color: rgba(0,168,107,0.98); border-color: rgba(0,168,107,0.35); background: rgba(0,168,107,0.12)}
+    .lineText{line-height:1.38}
+    .blanks{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+    .blankWrap{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+    .blank{
+      min-width: 92px; max-width: 260px;
+      padding: 10px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--text);
+      outline:none;
+      font-weight:800;
+    }
+    .blank:focus{border-color: rgba(29,79,255,0.55); box-shadow: 0 0 0 4px rgba(29,79,255,0.16)}
+    .hintText{font-size:12px; color:var(--muted)}
+    .cue{font-size:12px; color:var(--muted); margin-top:6px}
+    .resultsGrid{display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap:12px; margin:14px 0 4px}
+    .stat{border:1px solid var(--line); background:rgba(255,255,255,0.92); border-radius:16px; padding:12px}
+    .label{color:var(--muted); font-size:12px}
+    .value{font-weight:1000; font-size:22px; margin-top:4px}
+    .input{padding:10px 12px; border-radius:14px; border:1px solid var(--line); background:#fff; color:var(--text); outline:none; min-width:220px; font-weight:800}
+    .details{margin-top:14px; border:1px solid var(--line); border-radius:16px; padding:10px 12px; background: rgba(8,12,24,0.03)}
+    .details summary{cursor:pointer; font-weight:1000}
+    .correction{margin-top:10px; padding-top:10px; border-top:1px solid var(--line)}
+    .good{color:var(--good); font-weight:1000}
+    .bad{color:var(--bad); font-weight:1000}
+    .mini{font-size:12px; color:var(--muted)}
+    .modal{position:fixed; inset:0; display:grid; place-items:center; background: rgba(8,12,24,0.45); padding:18px}
+    .modal.hidden{display:none; pointer-events:none}
+    .modalCard{width:min(980px, 100%); max-height: 80vh; overflow:auto; background: rgba(255,255,255,0.98); border:1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow)}
+    .modalTop{display:flex; justify-content:space-between; align-items:center; padding:12px 12px 10px; border-bottom:1px solid var(--line)}
+    .modalTitle{font-weight:1000}
+    .modalBody{padding:12px}
+    .footer{text-align:center; padding:12px 14px 18px; color: rgba(8,12,24,0.55); font-weight:1000; letter-spacing:0.3px;}
+  </style>
 </head>
 <body>
   <div class="app">
@@ -17,7 +146,6 @@
           <div class="subtitle">Leaving Cert Spanish · practise your “YOU” lines</div>
         </div>
       </div>
-
       <div class="controls">
         <button id="btnHome" class="btn ghost" type="button">Home</button>
         <button id="btnHow" class="btn ghost" type="button">How to play</button>
@@ -31,15 +159,15 @@
           <h2>How to play</h2>
           <ol class="how">
             <li><strong>Pick a situation</strong> below.</li>
-            <li>Click a <strong>Level</strong> (1 is easiest → 5 is hardest).</li>
-            <li>Fill the blanks (or write the full line on levels 4–5).</li>
-            <li>Press <strong>Submit</strong> to get your score + corrections.</li>
+            <li>Click a <strong>Level</strong> (1 easiest → 5 hardest).</li>
+            <li>Fill blanks (or write full lines on 4–5).</li>
+            <li>Press <strong>Submit</strong> for score + corrections.</li>
           </ol>
           <div class="row">
             <div class="pill">✅ Typing</div>
             <div class="pill">🔊 Read aloud</div>
-            <div class="pill">🎙️ Voice input (Chrome/Edge best)</div>
-            <div class="pill">🏆 High scores (this device)</div>
+            <div class="pill">🎙️ Voice input</div>
+            <div class="pill">🏆 High scores (device)</div>
           </div>
         </div>
 
@@ -52,15 +180,15 @@
         <div class="card">
           <h3>Options</h3>
           <div class="options">
-            <label class="opt"><input type="checkbox" id="optStrictAccents" checked /> Strict accents (á, é, í, ó, ú, ü) required</label>
+            <label class="opt"><input type="checkbox" id="optStrictAccents" checked /> Strict accents required</label>
             <label class="opt"><input type="checkbox" id="optAllowEnyeAsN" checked /> Allow ñ typed as n</label>
             <label class="opt"><input type="checkbox" id="optLenientPunct" checked /> Ignore punctuation and extra spaces</label>
-            <label class="opt"><input type="checkbox" id="optShowHints" checked /> Allow hints (small point penalty)</label>
+            <label class="opt"><input type="checkbox" id="optShowHints" checked /> Allow hints (small penalty)</label>
           </div>
         </div>
 
         <noscript>
-          <div class="card danger">
+          <div class="card" style="border-color:rgba(214,31,44,0.35); background:rgba(214,31,44,0.10); font-weight:900">
             This game needs JavaScript enabled to work.
           </div>
         </noscript>
@@ -71,9 +199,8 @@
           <div>
             <div class="kicker" id="playKicker">Situation · Level</div>
             <h2 id="playTitle">—</h2>
-            <div class="muted" id="playDesc">Fill in the missing parts of the green “YOU” lines.</div>
+            <div class="muted" id="playDesc">—</div>
           </div>
-
           <div class="playBtns">
             <button id="btnSpeakExaminer" class="btn" type="button">🔊 Read examiner</button>
             <button id="btnSpeakAll" class="btn" type="button">🔊 Read all</button>
@@ -91,12 +218,11 @@
             </div>
             <div class="score">⭐ <span id="liveScore">0</span></div>
           </div>
-
           <div class="chat" id="chat"></div>
         </div>
 
         <div class="card compact">
-          <div class="muted small">Tip: Click any blank to focus it. Use 🎙️ voice to fill the currently focused blank/box.</div>
+          <div class="muted small">Tip: Click any blank to focus it. Use 🎙️ voice to fill the focused blank.</div>
         </div>
       </section>
 
@@ -110,7 +236,7 @@
             <div class="stat"><div class="label">Hints used</div><div class="value" id="finalHints">0</div></div>
           </div>
 
-          <div class="row gap">
+          <div class="row" style="gap:12px">
             <input id="playerName" class="input" maxlength="18" placeholder="Name for high score (optional)" />
             <button id="btnSaveScore" class="btn primary" type="button">Save score</button>
             <button id="btnRetry" class="btn" type="button">Try again</button>
@@ -138,6 +264,572 @@
     <footer class="footer"><span>© 2026 Synge Street Games Lab</span></footer>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    var DATA = {
+      "situations": [
+        {"id":"s1","title":"SITUACIÓN 1: ALOJAMIENTO","turns":[
+          {"speaker":"E","text":"Buenos días. ¿Qué quiere?"},
+          {"speaker":"YOU","text":"Hola, me gustaría una habitación doble con baño para dos noches, por favor."},
+          {"speaker":"E","text":"Lo siento, pero no hay habitaciones disponibles."},
+          {"speaker":"YOU","text":"¿De verdad? ¿No hay ninguna habitación libre? ¿Quizás tiene una habitación individual?"},
+          {"speaker":"E","text":"No, lo siento, pero el hotel está completo."},
+          {"speaker":"YOU","text":"¡Qué pena! ¿Puede recomendarme otro hotel cerca de aquí, por favor?"},
+          {"speaker":"E","text":"Sí, claro. Hay un hotel al lado del banco. Se llama “El Sol”."},
+          {"speaker":"YOU","text":"Gracias. ¿Es caro?"},
+          {"speaker":"E","text":"No, no es muy caro. Son noventa euros por noche."},
+          {"speaker":"YOU","text":"Bueno, está bien. ¿Y el desayuno está incluido en el precio?"},
+          {"speaker":"E","text":"Sí, está incluido."},
+          {"speaker":"YOU","text":"Perfecto. Muchísimas gracias por su ayuda. ¡Adiós!"}
+        ]},
+        {"id":"s2","title":"SITUACIÓN 2: PORTÁTIL ROTO","turns":[
+          {"speaker":"E","text":"Buenos días. ¿En qué puedo ayudarle?"},
+          {"speaker":"YOU","text":"Hola. Tengo un problema con mi portátil. No funciona."},
+          {"speaker":"E","text":"¿Qué le pasa exactamente?"},
+          {"speaker":"YOU","text":"Se apaga todo el tiempo y la pantalla se queda negra."},
+          {"speaker":"E","text":"¿Lo ha dejado caer o se ha mojado?"},
+          {"speaker":"YOU","text":"No, nunca se me ha caído y no se ha mojado."},
+          {"speaker":"E","text":"Vale. Lo podemos reparar. ¿Cuánto tiempo hace que lo compró?"},
+          {"speaker":"YOU","text":"Lo compré hace dos años."},
+          {"speaker":"E","text":"Entiendo. ¿Quiere dejarlo aquí para que lo revisemos?"},
+          {"speaker":"YOU","text":"Sí, por favor. ¿Cuánto tardará la reparación?"},
+          {"speaker":"E","text":"Depende. Entre tres y cinco días."},
+          {"speaker":"YOU","text":"De acuerdo. ¿Y cuánto costará?"},
+          {"speaker":"E","text":"Aproximadamente cien euros."},
+          {"speaker":"YOU","text":"Perfecto. Muchas gracias por su ayuda. ¡Hasta luego!"}
+        ]},
+        {"id":"s3","title":"SITUACIÓN 3: AUTOCARAVANA","turns":[
+          {"speaker":"E","text":"Buenos días. ¿En qué puedo ayudarle?"},
+          {"speaker":"YOU","text":"Hola. Tenemos un problema con la electricidad en nuestra autocaravana."},
+          {"speaker":"E","text":"¿Qué problema tienen?"},
+          {"speaker":"YOU","text":"No hay luz y no podemos cargar los móviles."},
+          {"speaker":"E","text":"Lo siento mucho. Voy a mandar a un técnico ahora mismo."},
+          {"speaker":"YOU","text":"Gracias. ¿Cuánto tiempo tardará en arreglarlo?"},
+          {"speaker":"E","text":"Probablemente una hora."},
+          {"speaker":"YOU","text":"De acuerdo. Esto es muy inconveniente. ¿Podemos tener un descuento, por favor?"},
+          {"speaker":"E","text":"Sí, claro. Les haré un descuento del diez por ciento."},
+          {"speaker":"YOU","text":"Muchas gracias. ¡Adiós!"}
+        ]},
+        {"id":"s4","title":"SITUACIÓN 4: MEDIOAMBIENTE","turns":[
+          {"speaker":"E","text":"Buenos días. Soy periodista. ¿Puedo hacerle unas preguntas sobre su proyecto?"},
+          {"speaker":"YOU","text":"Sí, claro. Estoy encantado/a de hablar del proyecto."},
+          {"speaker":"E","text":"¿En qué consiste el proyecto?"},
+          {"speaker":"YOU","text":"Es un proyecto medioambiental en el colegio para reducir la contaminación y reciclar más."},
+          {"speaker":"E","text":"¿Por qué es importante?"},
+          {"speaker":"YOU","text":"Es importante porque el cambio climático es un problema muy serio y tenemos que actuar ahora."},
+          {"speaker":"E","text":"¿Qué hace usted personalmente para ayudar?"},
+          {"speaker":"YOU","text":"Yo reciclo en casa, uso menos plástico y voy al colegio en bici o en transporte público."},
+          {"speaker":"E","text":"¿Cómo pueden ayudar otros estudiantes?"},
+          {"speaker":"YOU","text":"Pueden participar en actividades, apagar las luces, reciclar y hablar con sus familias."},
+          {"speaker":"E","text":"Muchas gracias por su tiempo."},
+          {"speaker":"YOU","text":"Gracias a usted. ¡Hasta luego!"}
+        ]},
+        {"id":"s5","title":"SITUACIÓN 5: AVERÍA DE COCHE","turns":[
+          {"speaker":"E","text":"Buenos días. ¿Qué problema tiene con el coche?"},
+          {"speaker":"YOU","text":"Hola. Mi coche hace un ruido raro y no arranca bien."},
+          {"speaker":"E","text":"¿Desde cuándo pasa esto?"},
+          {"speaker":"YOU","text":"Desde ayer. Empezó después de un viaje largo."},
+          {"speaker":"E","text":"¿Se ha encendido alguna luz en el salpicadero?"},
+          {"speaker":"YOU","text":"Sí, se encendió una luz roja y me preocupé mucho."},
+          {"speaker":"E","text":"Vale. Podemos revisarlo ahora. ¿Quiere dejarlo aquí?"},
+          {"speaker":"YOU","text":"Sí, por favor. ¿Cuánto tardará la reparación?"},
+          {"speaker":"E","text":"Entre dos y tres días."},
+          {"speaker":"YOU","text":"De acuerdo. ¿Y cuánto costará más o menos?"},
+          {"speaker":"E","text":"Depende, pero aproximadamente doscientos euros."},
+          {"speaker":"YOU","text":"Perfecto. Muchas gracias. ¡Adiós!"}
+        ]}
+      ]
+    };
+
+    function ready(fn){ if(document.readyState!=="loading") fn(); else document.addEventListener("DOMContentLoaded", fn); }
+
+    ready(function(){
+      function $(s){ return document.querySelector(s); }
+      function esc(s){ return String(s).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c])); }
+
+      var screens = { home: $("#screenHome"), play: $("#screenPlay"), results: $("#screenResults") };
+      function showScreen(name){ Object.keys(screens).forEach(k=>screens[k].classList.remove("active")); screens[name].classList.add("active"); }
+
+      var opts = { strictAccents:true, allowEnyeAsN:true, lenientPunct:true, showHints:true };
+      function loadOptions(){
+        opts.strictAccents = $("#optStrictAccents").checked;
+        opts.allowEnyeAsN  = $("#optAllowEnyeAsN").checked;
+        opts.lenientPunct  = $("#optLenientPunct").checked;
+        opts.showHints     = $("#optShowHints").checked;
+      }
+      ["#optStrictAccents","#optAllowEnyeAsN","#optLenientPunct","#optShowHints"].forEach(id=>{
+        $(id).addEventListener("change", loadOptions);
+      });
+
+      var ACC = {"á":"a","é":"e","í":"i","ó":"o","ú":"u","ü":"u","Á":"A","É":"E","Í":"I","Ó":"O","Ú":"U","Ü":"U"};
+      function stripAccents(s){ return s.split("").map(ch=>ACC[ch]||ch).join(""); }
+
+      function normalize(s){
+        var out = (s==null?"":String(s)).trim();
+        if(opts.lenientPunct) out = out.replace(/[¿?¡!.,;:()\[\]{}"“”'’]/g," ");
+        out = out.replace(/\s+/g," ").trim().toLowerCase();
+        if(opts.allowEnyeAsN) out = out.replace(/ñ/g,"n");
+        if(!opts.strictAccents) out = stripAccents(out);
+        return out;
+      }
+
+      function parseAlternatives(raw){
+        var cleaned = String(raw||"").trim();
+        var parts = cleaned.split("/").map(x=>x.trim()).filter(Boolean);
+        return parts.length<=1 ? [cleaned] : parts;
+      }
+      function isMatch(user, expectedRaw){
+        var u = normalize(user);
+        var alts = parseAlternatives(expectedRaw).map(x=>normalize(x));
+        return alts.some(a=>a===u);
+      }
+      function tokenSimilarity(a,b){
+        var A = normalize(a).split(" ").filter(Boolean);
+        var B = normalize(b).split(" ").filter(Boolean);
+        if(!A.length && !B.length) return 1;
+        var setA={}, setB={}; A.forEach(x=>setA[x]=1); B.forEach(x=>setB[x]=1);
+        var inter=0, uni=0;
+        Object.keys(setA).forEach(k=>{ uni++; if(setB[k]) inter++; });
+        Object.keys(setB).forEach(k=>{ if(!setA[k]) uni++; });
+        return uni===0?0:inter/uni;
+      }
+
+      var STOP = {"el":1,"la":1,"los":1,"las":1,"un":1,"una":1,"unos":1,"unas":1,"y":1,"o":1,"a":1,"de":1,"del":1,"al":1,"que":1,"en":1,"por":1,"para":1,"con":1,"sin":1,"es":1,"estoy":1,"estas":1,"esta":1,"está":1,"son":1,"soy":1,"eres":1,"se":1,"me":1,"te":1,"mi":1,"tu":1,"su":1,"sus":1,"lo":1,"le":1,"les":1,"ya":1,"muy":1,"más":1,"mas":1,"pero":1,"porque":1,"como":1,"cuando":1,"donde":1,"qué":1,"si":1,"no":1,"sí":1,"pues":1,"bueno":1};
+
+      function mulberry32(a){ return function(){ var t=a+=0x6D2B79F5; t=Math.imul(t^(t>>>15),t|1); t^=t+Math.imul(t^(t>>>7),t|61); return ((t^(t>>>14))>>>0)/4294967296; }; }
+      var SP_WORD = /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+$/;
+
+      function makeCloze(text, blanksWanted, seed){
+        var rng=mulberry32(seed);
+        var tokens=String(text).split(/(\s+)/);
+        var cand=[];
+        for(var i=0;i<tokens.length;i++){
+          var t=tokens[i];
+          if(/^\s+$/.test(t)) continue;
+          var w=t.replace(/[¿?¡!.,;:()\[\]{}"“”'’]/g,"").trim();
+          if(!w) continue;
+          if(!SP_WORD.test(w)) continue;
+          var wn=normalize(w);
+          if(wn.length<=3) continue;
+          if(STOP[wn]) continue;
+          cand.push({idx:i, raw:w});
+        }
+        for(var j=cand.length-1;j>0;j--){ var k=Math.floor(rng()*(j+1)); var tmp=cand[j]; cand[j]=cand[k]; cand[k]=tmp; }
+        var chosen=cand.slice(0, Math.max(0, blanksWanted));
+        var chosenIdx={}; chosen.forEach(c=>chosenIdx[c.idx]=1);
+
+        var out="";
+        for(var n=0;n<tokens.length;n++){
+          if(!chosenIdx[n]){ out+=tokens[n]; continue; }
+          var ans=tokens[n].replace(/^\W+|\W+$/g,"").trim();
+          out += "[[BLANK:" + ans.replace(/\]/g,"\\]") + "]]";
+        }
+        return {templ:out};
+      }
+
+      function splitTemplate(templ){
+        var parts=[], re=/\[\[BLANK:([^\]]+)\]\]/g, last=0, m;
+        while((m=re.exec(templ))!==null){
+          if(m.index>last) parts.push(templ.slice(last,m.index));
+          parts.push({blank:m[1]});
+          last=re.lastIndex;
+        }
+        if(last<templ.length) parts.push(templ.slice(last));
+        return parts;
+      }
+
+      var current={ situation:null, level:1, seed:12345, startMs:0, timerId:null, blanks:[], hintsUsed:0, lastResult:null };
+      function formatTime(ms){
+        var s=Math.max(0, Math.floor(ms/1000));
+        var m=Math.floor(s/60);
+        var r=s%60;
+        return m + ":" + (r<10 ? "0"+r : r);
+      }
+      function startTimer(){
+        current.startMs=performance.now();
+        if(current.timerId) clearInterval(current.timerId);
+        current.timerId=setInterval(()=>{ $("#time").textContent=formatTime(performance.now()-current.startMs); }, 250);
+      }
+      function stopTimer(){ if(current.timerId) clearInterval(current.timerId); current.timerId=null; }
+
+      function calcLiveScore(){
+        var total=current.blanks.length, correct=0;
+        current.blanks.forEach(b=>{
+          var val=(b.input&&b.input.value)?b.input.value:"";
+          if(b.mode==="inline"){ if(isMatch(val,b.expected)) correct++; }
+          else { if(tokenSimilarity(val,b.expectedFull)>=b.simThreshold) correct++; }
+        });
+        var elapsed=(performance.now()-current.startMs)/1000;
+        var accuracy=total?correct/total:0;
+        var speedBonus=Math.max(0, Math.floor(220-elapsed));
+        var score=Math.round(correct*20 + accuracy*120 + speedBonus) - current.hintsUsed*6;
+        return {score:Math.max(0,score), correct, total, accuracy};
+      }
+
+      function updateProgress(){
+        var total=current.blanks.length, filled=0;
+        current.blanks.forEach(b=>{ var v=(b.input&&b.input.value)?b.input.value.trim():""; if(v) filled++; });
+        var pct=total?(filled/total)*100:0;
+        $("#progressFill").style.width=pct+"%";
+        $("#progressText").textContent=filled+" / "+total;
+        $("#liveScore").textContent=String(calcLiveScore().score);
+      }
+
+      function buildHome(){
+        var grid=$("#situationGrid");
+        grid.innerHTML="";
+        DATA.situations.forEach(s=>{
+          var youLines=s.turns.filter(t=>t.speaker==="YOU").length;
+          var card=document.createElement("div");
+          card.className="sitCard";
+          card.innerHTML =
+            '<div class="sitTitle">'+esc(s.title)+'</div>'+
+            '<div class="sitMeta">'+s.turns.length+' lines · '+youLines+' YOU lines</div>'+
+            '<div class="levelRow">'+[1,2,3,4,5].map(l=>(
+              '<button class="levelBtn" type="button" data-sit="'+s.id+'" data-lvl="'+l+'">Level '+l+'</button>'
+            )).join("")+'</div>';
+          grid.appendChild(card);
+        });
+
+        grid.addEventListener("click", function(e){
+          var btn = e.target.closest(".levelBtn");
+          if(!btn) return;
+          startGame(btn.getAttribute("data-sit"), parseInt(btn.getAttribute("data-lvl"),10));
+        });
+      }
+
+      var activeBlankId=0;
+      function setActiveBlank(id){ activeBlankId=id; }
+
+      function makeCues(text){
+        var words=normalize(text).split(" ").filter(Boolean);
+        var content=words.filter(w=>w.length>3 && !STOP[w]);
+        var unique=[];
+        content.forEach(w=>{ if(unique.indexOf(w)===-1) unique.push(w); });
+        unique=unique.slice(0,6);
+        return unique.length ? unique.join(" · ") : "(no cues)";
+      }
+
+      function startGame(sitId, level){
+        loadOptions();
+        current.situation = DATA.situations.find(x=>x.id===sitId);
+        current.level = level;
+        current.seed = Date.now()%1000000;
+        current.blanks = [];
+        current.hintsUsed = 0;
+        current.lastResult = null;
+
+        $("#playKicker").textContent = current.situation.title + " · Level " + level;
+        $("#playTitle").textContent = current.situation.title;
+        $("#playDesc").textContent = (level<=3)
+          ? "Fill in the missing parts of the green “YOU” lines."
+          : "Write/say the full “YOU” lines. Level 4 gives keyword cues; Level 5 gives none.";
+
+        buildChat();
+        showScreen("play");
+        startTimer();
+        updateProgress();
+      }
+
+      function buildChat(){
+        var chat=$("#chat");
+        chat.innerHTML="";
+        var turns=current.situation.turns;
+        var globalBlankIndex=0;
+
+        turns.forEach((t, idx)=>{
+          var bubble=document.createElement("div");
+          bubble.className="bubble "+(t.speaker==="E"?"examiner":"you");
+
+          var top=document.createElement("div");
+          top.className="bubbleTop";
+          top.innerHTML =
+            '<span class="badge '+(t.speaker==="E"?"e":"you")+'">'+(t.speaker==="E"?"EXAMINER":"YOU")+'</span>'+
+            '<span class="mini">Line '+(idx+1)+'</span>';
+          bubble.appendChild(top);
+
+          var line=document.createElement("div");
+          line.className="lineText";
+          line.textContent=t.text;
+          bubble.appendChild(line);
+
+          if(t.speaker==="YOU"){
+            if(current.level<=3){
+              var blanksWanted = (current.level===1)?2:(current.level===2?4:6);
+              var templObj = makeCloze(t.text, blanksWanted, current.seed + idx*97);
+              var parts = splitTemplate(templObj.templ);
+
+              var wrap=document.createElement("div");
+              wrap.className="blanks";
+
+              parts.forEach(p=>{
+                if(typeof p==="string"){
+                  var span=document.createElement("span");
+                  span.textContent=p;
+                  wrap.appendChild(span);
+                } else {
+                  var blankWrap=document.createElement("span");
+                  blankWrap.className="blankWrap";
+
+                  var input=document.createElement("input");
+                  input.className="blank";
+                  input.placeholder="…";
+                  input.autocomplete="off";
+                  input.spellcheck=false;
+
+                  var expected=p.blank;
+
+                  var hintBtn=document.createElement("button");
+                  hintBtn.className="btn ghost";
+                  hintBtn.type="button";
+                  hintBtn.textContent="Hint";
+
+                  var hintText=document.createElement("span");
+                  hintText.className="hintText";
+                  hintText.textContent="";
+
+                  if(!opts.showHints) hintBtn.style.display="none";
+
+                  hintBtn.addEventListener("click", ()=>{
+                    current.hintsUsed += 1;
+                    var alts=parseAlternatives(expected);
+                    var clean=alts[0].trim();
+                    var first=clean.slice(0, clean.length>6?2:1);
+                    hintText.textContent=" "+first+"… ("+clean.length+")";
+                    hintBtn.disabled=true;
+                    updateProgress();
+                  });
+
+                  input.addEventListener("input", updateProgress);
+                  input.addEventListener("focus", ()=>setActiveBlank(globalBlankIndex));
+
+                  current.blanks.push({id:globalBlankIndex, mode:"inline", expected, input, lineIndex:idx});
+                  globalBlankIndex++;
+
+                  blankWrap.appendChild(input);
+                  blankWrap.appendChild(hintBtn);
+                  blankWrap.appendChild(hintText);
+                  wrap.appendChild(blankWrap);
+                }
+              });
+
+              bubble.appendChild(wrap);
+
+            } else {
+              var ta=document.createElement("textarea");
+              ta.className="blank";
+              ta.rows=2;
+              ta.style.width="100%";
+              ta.style.maxWidth="900px";
+              ta.style.minHeight="54px";
+              ta.placeholder = (current.level===4) ? "Type/say the full response (use cues below)…" : "Type/say the full response…";
+              ta.autocomplete="off";
+              ta.spellcheck=false;
+
+              ta.addEventListener("input", updateProgress);
+              ta.addEventListener("focus", ()=>setActiveBlank(globalBlankIndex));
+
+              bubble.appendChild(ta);
+
+              if(current.level===4){
+                var cue=document.createElement("div");
+                cue.className="cue";
+                cue.textContent="Cues: "+makeCues(t.text);
+                bubble.appendChild(cue);
+              }
+
+              current.blanks.push({id:globalBlankIndex, mode:"full", expectedFull:t.text, simThreshold:0.86, input:ta, lineIndex:idx});
+              globalBlankIndex++;
+            }
+          }
+
+          chat.appendChild(bubble);
+        });
+      }
+
+      function speak(text){
+        if(!("speechSynthesis" in window)){ alert("Text-to-speech not supported here."); return; }
+        window.speechSynthesis.cancel();
+        var u = new SpeechSynthesisUtterance(text);
+        u.lang="es-ES"; u.rate=1.0;
+        window.speechSynthesis.speak(u);
+      }
+      function readExaminerOnly(){
+        var lines=current.situation.turns.filter(t=>t.speaker==="E").map(t=>t.text);
+        speak(lines.join(" ... "));
+      }
+      function readAll(){
+        var lines=current.situation.turns.map(t=>(t.speaker==="E"?"Examinador: ":"Tú: ")+t.text);
+        speak(lines.join(" ... "));
+      }
+      function startVoiceFill(){
+        var Rec=window.SpeechRecognition || window.webkitSpeechRecognition;
+        if(!Rec){ alert("Voice input not supported here. Try Chrome/Edge."); return; }
+        var rec=new Rec(); rec.lang="es-ES"; rec.interimResults=false; rec.maxAlternatives=1;
+        var target=current.blanks.find(b=>b.id===activeBlankId) || current.blanks[0];
+        if(!target) return;
+        rec.onresult=(ev)=>{
+          var text = ev.results && ev.results[0] && ev.results[0][0] ? ev.results[0][0].transcript : "";
+          target.input.value=String(text).trim();
+          target.input.dispatchEvent(new Event("input"));
+          target.input.focus();
+        };
+        rec.onerror=()=>alert("Voice input error. Check mic permissions.");
+        rec.start();
+      }
+
+      function grade(){
+        stopTimer();
+        var elapsedMs=performance.now()-current.startMs;
+        var total=current.blanks.length, correct=0, results=[];
+        current.blanks.forEach(b=>{
+          var given=b.input.value.trim();
+          if(b.mode==="inline"){
+            var ok=isMatch(given,b.expected); if(ok) correct++;
+            results.push({mode:"inline", expected:b.expected, given, ok, lineIndex:b.lineIndex});
+          } else {
+            var sim=tokenSimilarity(given,b.expectedFull);
+            var ok2=sim>=b.simThreshold; if(ok2) correct++;
+            results.push({mode:"full", expected:b.expectedFull, given, ok:ok2, sim, lineIndex:b.lineIndex});
+          }
+        });
+        var accuracy=total?correct/total:0;
+        var score=Math.max(0, Math.round(calcLiveScore().score));
+        return {score, elapsedMs, accuracy, results, hintsUsed: current.hintsUsed};
+      }
+
+      function renderCorrections(payload){
+        var byLine={};
+        payload.results.forEach(r=>{ (byLine[r.lineIndex]=byLine[r.lineIndex]||[]).push(r); });
+        var wrap=document.createElement("div");
+
+        current.situation.turns.forEach((t, idx)=>{
+          if(t.speaker!=="YOU") return;
+          var lineRs=byLine[idx]||[];
+          var okAll=lineRs.length?lineRs.every(x=>x.ok):false;
+          var your=(current.level<=3) ? lineRs.map(x=>x.given).join(" ").trim() : (lineRs[0]?lineRs[0].given:"");
+
+          var block=document.createElement("div");
+          block.className="correction";
+          block.innerHTML =
+            '<div><span class="'+(okAll?"good":"bad")+'">'+(okAll?"✓":"✗")+'</span> <strong>YOU</strong> · Line '+(idx+1)+'</div>'+
+            '<div class="mini" style="margin-top:6px">Model answer:</div>'+
+            '<div style="margin-top:4px">'+esc(t.text)+'</div>'+
+            '<div class="mini" style="margin-top:8px">Your answer:</div>'+
+            '<div style="margin-top:4px">'+esc(your)+'</div>';
+
+          if(current.level>3 && lineRs[0]){
+            var simPct=Math.round((lineRs[0].sim||0)*100);
+            var p=document.createElement("div");
+            p.className="mini"; p.style.marginTop="8px";
+            p.innerHTML='Similarity: <strong>'+simPct+'%</strong> (needs ~86%+)';
+            block.appendChild(p);
+          }
+          wrap.appendChild(block);
+        });
+
+        $("#corrections").innerHTML="";
+        $("#corrections").appendChild(wrap);
+      }
+
+      function onSubmit(){
+        var payload=grade();
+        $("#finalScore").textContent=String(payload.score);
+        $("#finalAcc").textContent=Math.round(payload.accuracy*100)+"%";
+        $("#finalTime").textContent=formatTime(payload.elapsedMs);
+        $("#finalHints").textContent=String(payload.hintsUsed);
+        renderCorrections(payload);
+        current.lastResult=payload;
+        showScreen("results");
+      }
+
+      function keyForScores(){ return "rp_scores_v2::"+current.situation.id+"::L"+current.level; }
+      function saveScore(){
+        var name=($("#playerName").value||"").trim().slice(0,18) || "Anonymous";
+        if(!current.lastResult) return;
+        var item={name, score:current.lastResult.score, timeMs:current.lastResult.elapsedMs, acc:current.lastResult.accuracy, when:Date.now()};
+        var key=keyForScores();
+        var existing=JSON.parse(localStorage.getItem(key) || "[]");
+        existing.push(item);
+        existing.sort((a,b)=>(b.score-a.score)||(a.timeMs-b.timeMs));
+        localStorage.setItem(key, JSON.stringify(existing.slice(0,10)));
+        alert("Saved! Check High Scores.");
+      }
+
+      function showHighScores(){
+        var rows=[];
+        DATA.situations.forEach(s=>{
+          for(var lvl=1; lvl<=5; lvl++){
+            var key="rp_scores_v2::"+s.id+"::L"+lvl;
+            var list=JSON.parse(localStorage.getItem(key)||"[]");
+            if(!list.length) continue;
+            list.slice(0,5).forEach((r, idx)=>{
+              rows.push({sit:s.title, lvl, rank:idx+1, name:r.name, score:r.score, time:formatTime(r.timeMs), acc:Math.round(r.acc*100)+"%"});
+            });
+          }
+        });
+        rows.sort((a,b)=>b.score-a.score);
+
+        $("#modalTitle").textContent="High Scores (this device)";
+        $("#modalBody").innerHTML = rows.length ? (
+          '<div class="mini muted" style="margin-bottom:10px">Saved on this device/browser only.</div>'+
+          '<div style="overflow:auto">'+
+          '<table style="width:100%; border-collapse:collapse; font-size:13px">'+
+          '<thead><tr>'+
+          '<th style="text-align:left; padding:8px; border-bottom:1px solid var(--line)">Situation</th>'+
+          '<th style="text-align:left; padding:8px; border-bottom:1px solid var(--line)">Level</th>'+
+          '<th style="text-align:left; padding:8px; border-bottom:1px solid var(--line)">Rank</th>'+
+          '<th style="text-align:left; padding:8px; border-bottom:1px solid var(--line)">Name</th>'+
+          '<th style="text-align:left; padding:8px; border-bottom:1px solid var(--line)">Score</th>'+
+          '<th style="text-align:left; padding:8px; border-bottom:1px solid var(--line)">Time</th>'+
+          '<th style="text-align:left; padding:8px; border-bottom:1px solid var(--line)">Acc</th>'+
+          '</tr></thead><tbody>'+
+          rows.map(r=>(
+            '<tr>'+
+              '<td style="padding:8px; border-bottom:1px solid var(--line)">'+esc(r.sit)+'</td>'+
+              '<td style="padding:8px; border-bottom:1px solid var(--line)">'+r.lvl+'</td>'+
+              '<td style="padding:8px; border-bottom:1px solid var(--line)">'+r.rank+'</td>'+
+              '<td style="padding:8px; border-bottom:1px solid var(--line)">'+esc(r.name)+'</td>'+
+              '<td style="padding:8px; border-bottom:1px solid var(--line)"><strong>'+r.score+'</strong></td>'+
+              '<td style="padding:8px; border-bottom:1px solid var(--line)">'+r.time+'</td>'+
+              '<td style="padding:8px; border-bottom:1px solid var(--line)">'+r.acc+'</td>'+
+            '</tr>'
+          )).join("") +
+          '</tbody></table></div>'
+        ) : '<div class="muted">No scores saved yet.</div>';
+
+        $("#modal").classList.remove("hidden");
+      }
+
+      function showHow(){
+        $("#modalTitle").textContent="How to play";
+        $("#modalBody").innerHTML =
+          '<ol style="margin:0; padding-left:18px; line-height:1.7">'+
+          '<li>Pick a situation on the Home screen.</li>'+
+          '<li>Click Level 1–5 to start.</li>'+
+          '<li>Fill blanks (1–3) or write the full line (4–5).</li>'+
+          '<li>Press Submit for score + corrections.</li>'+
+          '</ol>';
+        $("#modal").classList.remove("hidden");
+      }
+
+      $("#btnHome").addEventListener("click", ()=>{ stopTimer(); showScreen("home"); });
+      $("#btnHome2").addEventListener("click", ()=>{ stopTimer(); showScreen("home"); });
+      $("#btnHow").addEventListener("click", showHow);
+      $("#btnScores").addEventListener("click", showHighScores);
+      $("#btnCloseModal").addEventListener("click", ()=>$("#modal").classList.add("hidden"));
+      $("#modal").addEventListener("click", (e)=>{ if(e.target && e.target.id==="modal") $("#modal").classList.add("hidden"); });
+
+      $("#btnSpeakExaminer").addEventListener("click", readExaminerOnly);
+      $("#btnSpeakAll").addEventListener("click", readAll);
+      $("#btnVoice").addEventListener("click", startVoiceFill);
+      $("#btnSubmit").addEventListener("click", onSubmit);
+      $("#btnRetry").addEventListener("click", ()=>startGame(current.situation.id, current.level));
+      $("#btnSaveScore").addEventListener("click", saveScore);
+
+      loadOptions();
+      buildHome();
+      showScreen("home");
+    });
+  </script>
 </body>
 </html>
