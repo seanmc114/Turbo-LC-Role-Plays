@@ -1,102 +1,78 @@
-/* script.js */
-/* Role Play Cloze Trainer */
+/* script.js (no \p{L} / very compatible) */
 
-const DATA = {
-  "meta": {
-    "source": "Sits for game.docx",
-    "created": "2026-01-14"
-  },
+var DATA = {
+  "meta": { "source": "Sits for game.docx", "created": "2026-01-14" },
   "situations": [
-    {
-      "id": "s1",
-      "title": "SITUACIÓN 1: ALOJAMIENTO — The examiner is a receptionist / owner of a hotel. You are a tourist. You want to stay for 2 nights. There are no rooms. Ask for alternatives. Agree on a price. Ask about breakfast. Thank and say goodbye.",
-      "turns": [
-        { "speaker": "E", "text": "Buenos días. ¿Qué quiere?" },
-        { "speaker": "YOU", "text": "Hola, me gustaría una habitación doble con baño para dos noches, por favor." },
-        { "speaker": "E", "text": "Lo siento, pero no hay habitaciones disponibles." },
-        { "speaker": "YOU", "text": "¿De verdad? ¿No hay ninguna habitación libre? ¿Quizás tiene una habitación individual?" },
-        { "speaker": "E", "text": "No, lo siento, pero el hotel está completo." },
-        { "speaker": "YOU", "text": "¡Qué pena! ¿Puede recomendarme otro hotel cerca de aquí, por favor?" },
-        { "speaker": "E", "text": "Sí, claro. Hay un hotel al lado del banco. Se llama “El Sol”." },
-        { "speaker": "YOU", "text": "Gracias. ¿Es caro?" },
-        { "speaker": "E", "text": "No, no es muy caro. Son noventa euros por noche." },
-        { "speaker": "YOU", "text": "Bueno, está bien. ¿Y el desayuno está incluido en el precio?" },
-        { "speaker": "E", "text": "Sí, está incluido." },
-        { "speaker": "YOU", "text": "Perfecto. Muchísimas gracias por su ayuda. ¡Adiós!" }
-      ]
-    },
-    {
-      "id": "s2",
-      "title": "SITUACIÓN 2: PORTÁTIL ROTO — The examiner is a receptionist / assistant in an electronics shop. You are a customer. Your laptop is broken. Explain the problem. Ask if it can be repaired. Ask how long it will take. Ask about the price. Thank and say goodbye.",
-      "turns": [
-        { "speaker": "E", "text": "Buenos días. ¿En qué puedo ayudarle?" },
-        { "speaker": "YOU", "text": "Hola. Tengo un problema con mi portátil. No funciona." },
-        { "speaker": "E", "text": "¿Qué le pasa exactamente?" },
-        { "speaker": "YOU", "text": "Se apaga todo el tiempo y la pantalla se queda negra." },
-        { "speaker": "E", "text": "¿Lo ha dejado caer o se ha mojado?" },
-        { "speaker": "YOU", "text": "No, nunca se me ha caído y no se ha mojado." },
-        { "speaker": "E", "text": "Vale. Lo podemos reparar. ¿Cuánto tiempo hace que lo compró?" },
-        { "speaker": "YOU", "text": "Lo compré hace dos años." },
-        { "speaker": "E", "text": "Entiendo. ¿Quiere dejarlo aquí para que lo revisemos?" },
-        { "speaker": "YOU", "text": "Sí, por favor. ¿Cuánto tardará la reparación?" },
-        { "speaker": "E", "text": "Depende. Entre tres y cinco días." },
-        { "speaker": "YOU", "text": "De acuerdo. ¿Y cuánto costará?" },
-        { "speaker": "E", "text": "Aproximadamente cien euros." },
-        { "speaker": "YOU", "text": "Perfecto. Muchas gracias por su ayuda. ¡Hasta luego!" }
-      ]
-    },
-    {
-      "id": "s3",
-      "title": "SITUACIÓN 3: AUTOCARAVANA — The examiner is a receptionist in a campsite. You are staying there in a caravan. There is no electricity. Complain. Ask for help. Ask when it will be fixed. Ask for a discount. Thank and say goodbye.",
-      "turns": [
-        { "speaker": "E", "text": "Buenos días. ¿En qué puedo ayudarle?" },
-        { "speaker": "YOU", "text": "Hola. Tenemos un problema con la electricidad en nuestra autocaravana." },
-        { "speaker": "E", "text": "¿Qué problema tienen?" },
-        { "speaker": "YOU", "text": "No hay luz y no podemos cargar los móviles." },
-        { "speaker": "E", "text": "Lo siento mucho. Voy a mandar a un técnico ahora mismo." },
-        { "speaker": "YOU", "text": "Gracias. ¿Cuánto tiempo tardará en arreglarlo?" },
-        { "speaker": "E", "text": "Probablemente una hora." },
-        { "speaker": "YOU", "text": "De acuerdo. Esto es muy inconveniente. ¿Podemos tener un descuento, por favor?" },
-        { "speaker": "E", "text": "Sí, claro. Les haré un descuento del diez por ciento." },
-        { "speaker": "YOU", "text": "Muchas gracias. ¡Adiós!" }
-      ]
-    },
-    {
-      "id": "s4",
-      "title": "SITUACIÓN 4: MEDIOAMBIENTE — The examiner is a journalist. You are taking part in a school environmental project. Explain the project. Say why it is important. Mention what you personally do. Invite others to help. Thank and say goodbye.",
-      "turns": [
-        { "speaker": "E", "text": "Buenos días. Soy periodista. ¿Puedo hacerle unas preguntas sobre su proyecto?" },
-        { "speaker": "YOU", "text": "Sí, claro. Estoy encantado/a de hablar del proyecto." },
-        { "speaker": "E", "text": "¿En qué consiste el proyecto?" },
-        { "speaker": "YOU", "text": "Es un proyecto medioambiental en el colegio para reducir la contaminación y reciclar más." },
-        { "speaker": "E", "text": "¿Por qué es importante?" },
-        { "speaker": "YOU", "text": "Es importante porque el cambio climático es un problema muy serio y tenemos que actuar ahora." },
-        { "speaker": "E", "text": "¿Qué hace usted personalmente para ayudar?" },
-        { "speaker": "YOU", "text": "Yo reciclo en casa, uso menos plástico y voy al colegio en bici o en transporte público." },
-        { "speaker": "E", "text": "¿Cómo pueden ayudar otros estudiantes?" },
-        { "speaker": "YOU", "text": "Pueden participar en actividades, apagar las luces, reciclar y hablar con sus familias." },
-        { "speaker": "E", "text": "Muchas gracias por su tiempo." },
-        { "speaker": "YOU", "text": "Gracias a usted. ¡Hasta luego!" }
-      ]
-    },
-    {
-      "id": "s5",
-      "title": "SITUACIÓN 5: AVERÍA DE COCHE — The examiner is a mechanic. You have a problem with your car. Explain what happened. Ask for a repair. Ask how long it will take. Ask about the cost. Thank and say goodbye.",
-      "turns": [
-        { "speaker": "E", "text": "Buenos días. ¿Qué problema tiene con el coche?" },
-        { "speaker": "YOU", "text": "Hola. Mi coche hace un ruido raro y no arranca bien." },
-        { "speaker": "E", "text": "¿Desde cuándo pasa esto?" },
-        { "speaker": "YOU", "text": "Desde ayer. Empezó después de un viaje largo." },
-        { "speaker": "E", "text": "¿Se ha encendido alguna luz en el salpicadero?" },
-        { "speaker": "YOU", "text": "Sí, se encendió una luz roja y me preocupé mucho." },
-        { "speaker": "E", "text": "Vale. Podemos revisarlo ahora. ¿Quiere dejarlo aquí?" },
-        { "speaker": "YOU", "text": "Sí, por favor. ¿Cuánto tardará la reparación?" },
-        { "speaker": "E", "text": "Entre dos y tres días." },
-        { "speaker": "YOU", "text": "De acuerdo. ¿Y cuánto costará más o menos?" },
-        { "speaker": "E", "text": "Depende, pero aproximadamente doscientos euros." },
-        { "speaker": "YOU", "text": "Perfecto. Muchas gracias. ¡Adiós!" }
-      ]
-    }
+    {"id":"s1","title":"SITUACIÓN 1: ALOJAMIENTO — The examiner is a receptionist / owner of a hotel. You are a tourist. You want to stay for 2 nights. There are no rooms. Ask for alternatives. Agree on a price. Ask about breakfast. Thank and say goodbye.","turns":[
+      {"speaker":"E","text":"Buenos días. ¿Qué quiere?"},
+      {"speaker":"YOU","text":"Hola, me gustaría una habitación doble con baño para dos noches, por favor."},
+      {"speaker":"E","text":"Lo siento, pero no hay habitaciones disponibles."},
+      {"speaker":"YOU","text":"¿De verdad? ¿No hay ninguna habitación libre? ¿Quizás tiene una habitación individual?"},
+      {"speaker":"E","text":"No, lo siento, pero el hotel está completo."},
+      {"speaker":"YOU","text":"¡Qué pena! ¿Puede recomendarme otro hotel cerca de aquí, por favor?"},
+      {"speaker":"E","text":"Sí, claro. Hay un hotel al lado del banco. Se llama “El Sol”."},
+      {"speaker":"YOU","text":"Gracias. ¿Es caro?"},
+      {"speaker":"E","text":"No, no es muy caro. Son noventa euros por noche."},
+      {"speaker":"YOU","text":"Bueno, está bien. ¿Y el desayuno está incluido en el precio?"},
+      {"speaker":"E","text":"Sí, está incluido."},
+      {"speaker":"YOU","text":"Perfecto. Muchísimas gracias por su ayuda. ¡Adiós!"}
+    ]},
+    {"id":"s2","title":"SITUACIÓN 2: PORTÁTIL ROTO — The examiner is a receptionist / assistant in an electronics shop. You are a customer. Your laptop is broken. Explain the problem. Ask if it can be repaired. Ask how long it will take. Ask about the price. Thank and say goodbye.","turns":[
+      {"speaker":"E","text":"Buenos días. ¿En qué puedo ayudarle?"},
+      {"speaker":"YOU","text":"Hola. Tengo un problema con mi portátil. No funciona."},
+      {"speaker":"E","text":"¿Qué le pasa exactamente?"},
+      {"speaker":"YOU","text":"Se apaga todo el tiempo y la pantalla se queda negra."},
+      {"speaker":"E","text":"¿Lo ha dejado caer o se ha mojado?"},
+      {"speaker":"YOU","text":"No, nunca se me ha caído y no se ha mojado."},
+      {"speaker":"E","text":"Vale. Lo podemos reparar. ¿Cuánto tiempo hace que lo compró?"},
+      {"speaker":"YOU","text":"Lo compré hace dos años."},
+      {"speaker":"E","text":"Entiendo. ¿Quiere dejarlo aquí para que lo revisemos?"},
+      {"speaker":"YOU","text":"Sí, por favor. ¿Cuánto tardará la reparación?"},
+      {"speaker":"E","text":"Depende. Entre tres y cinco días."},
+      {"speaker":"YOU","text":"De acuerdo. ¿Y cuánto costará?"},
+      {"speaker":"E","text":"Aproximadamente cien euros."},
+      {"speaker":"YOU","text":"Perfecto. Muchas gracias por su ayuda. ¡Hasta luego!"}
+    ]},
+    {"id":"s3","title":"SITUACIÓN 3: AUTOCARAVANA — The examiner is a receptionist in a campsite. You are staying there in a caravan. There is no electricity. Complain. Ask for help. Ask when it will be fixed. Ask for a discount. Thank and say goodbye.","turns":[
+      {"speaker":"E","text":"Buenos días. ¿En qué puedo ayudarle?"},
+      {"speaker":"YOU","text":"Hola. Tenemos un problema con la electricidad en nuestra autocaravana."},
+      {"speaker":"E","text":"¿Qué problema tienen?"},
+      {"speaker":"YOU","text":"No hay luz y no podemos cargar los móviles."},
+      {"speaker":"E","text":"Lo siento mucho. Voy a mandar a un técnico ahora mismo."},
+      {"speaker":"YOU","text":"Gracias. ¿Cuánto tiempo tardará en arreglarlo?"},
+      {"speaker":"E","text":"Probablemente una hora."},
+      {"speaker":"YOU","text":"De acuerdo. Esto es muy inconveniente. ¿Podemos tener un descuento, por favor?"},
+      {"speaker":"E","text":"Sí, claro. Les haré un descuento del diez por ciento."},
+      {"speaker":"YOU","text":"Muchas gracias. ¡Adiós!"}
+    ]},
+    {"id":"s4","title":"SITUACIÓN 4: MEDIOAMBIENTE — The examiner is a journalist. You are taking part in a school environmental project. Explain the project. Say why it is important. Mention what you personally do. Invite others to help. Thank and say goodbye.","turns":[
+      {"speaker":"E","text":"Buenos días. Soy periodista. ¿Puedo hacerle unas preguntas sobre su proyecto?"},
+      {"speaker":"YOU","text":"Sí, claro. Estoy encantado/a de hablar del proyecto."},
+      {"speaker":"E","text":"¿En qué consiste el proyecto?"},
+      {"speaker":"YOU","text":"Es un proyecto medioambiental en el colegio para reducir la contaminación y reciclar más."},
+      {"speaker":"E","text":"¿Por qué es importante?"},
+      {"speaker":"YOU","text":"Es importante porque el cambio climático es un problema muy serio y tenemos que actuar ahora."},
+      {"speaker":"E","text":"¿Qué hace usted personalmente para ayudar?"},
+      {"speaker":"YOU","text":"Yo reciclo en casa, uso menos plástico y voy al colegio en bici o en transporte público."},
+      {"speaker":"E","text":"¿Cómo pueden ayudar otros estudiantes?"},
+      {"speaker":"YOU","text":"Pueden participar en actividades, apagar las luces, reciclar y hablar con sus familias."},
+      {"speaker":"E","text":"Muchas gracias por su tiempo."},
+      {"speaker":"YOU","text":"Gracias a usted. ¡Hasta luego!"}
+    ]},
+    {"id":"s5","title":"SITUACIÓN 5: AVERÍA DE COCHE — The examiner is a mechanic. You have a problem with your car. Explain what happened. Ask for a repair. Ask how long it will take. Ask about the cost. Thank and say goodbye.","turns":[
+      {"speaker":"E","text":"Buenos días. ¿Qué problema tiene con el coche?"},
+      {"speaker":"YOU","text":"Hola. Mi coche hace un ruido raro y no arranca bien."},
+      {"speaker":"E","text":"¿Desde cuándo pasa esto?"},
+      {"speaker":"YOU","text":"Desde ayer. Empezó después de un viaje largo."},
+      {"speaker":"E","text":"¿Se ha encendido alguna luz en el salpicadero?"},
+      {"speaker":"YOU","text":"Sí, se encendió una luz roja y me preocupé mucho."},
+      {"speaker":"E","text":"Vale. Podemos revisarlo ahora. ¿Quiere dejarlo aquí?"},
+      {"speaker":"YOU","text":"Sí, por favor. ¿Cuánto tardará la reparación?"},
+      {"speaker":"E","text":"Entre dos y tres días."},
+      {"speaker":"YOU","text":"De acuerdo. ¿Y cuánto costará más o menos?"},
+      {"speaker":"E","text":"Depende, pero aproximadamente doscientos euros."},
+      {"speaker":"YOU","text":"Perfecto. Muchas gracias. ¡Adiós!"}
+    ]}
   ]
 };
 
@@ -105,161 +81,199 @@ function ready(fn){
   else document.addEventListener("DOMContentLoaded", fn);
 }
 
-ready(() => {
-  // Friendly error banner (helps if something goes wrong on a student device)
-  window.addEventListener("error", (e) => {
-    console.error(e.error || e.message);
-    const m = document.createElement("div");
-    m.style.position = "fixed";
-    m.style.left = "12px";
-    m.style.right = "12px";
-    m.style.bottom = "12px";
-    m.style.padding = "12px 14px";
-    m.style.borderRadius = "14px";
-    m.style.background = "rgba(214,31,44,0.92)";
-    m.style.color = "white";
-    m.style.fontWeight = "800";
-    m.style.zIndex = "9999";
-    m.textContent = "This page hit a JavaScript error. Please refresh. If it persists, tell your teacher.";
-    document.body.appendChild(m);
-  }, { once: true });
+ready(function(){
 
-  const $ = (sel) => document.querySelector(sel);
-  const $$ = (sel) => Array.from(document.querySelectorAll(sel));
+  // If JS is running, tag the body (helps debugging + CSS if needed)
+  document.body.setAttribute("data-js", "on");
 
-  const screens = {
+  function $(sel){ return document.querySelector(sel); }
+  function $all(sel){ return Array.prototype.slice.call(document.querySelectorAll(sel)); }
+
+  // If anything throws, show a visible banner instead of "dead buttons"
+  window.addEventListener("error", function(e){
+    try{
+      var m = document.createElement("div");
+      m.style.position = "fixed";
+      m.style.left = "12px";
+      m.style.right = "12px";
+      m.style.bottom = "12px";
+      m.style.padding = "12px 14px";
+      m.style.borderRadius = "14px";
+      m.style.background = "rgba(214,31,44,0.95)";
+      m.style.color = "white";
+      m.style.fontWeight = "900";
+      m.style.zIndex = "9999";
+      m.textContent = "JavaScript error on this device. Please refresh. (Tell teacher: browser/device may be blocking a feature.)";
+      document.body.appendChild(m);
+    }catch(_){}
+  }, { once:true });
+
+  var screens = {
     home: $("#screenHome"),
     play: $("#screenPlay"),
     results: $("#screenResults")
   };
 
-  function showScreen(name) {
-    Object.values(screens).forEach(s => s.classList.remove("active"));
+  function showScreen(name){
+    screens.home.classList.remove("active");
+    screens.play.classList.remove("active");
+    screens.results.classList.remove("active");
     screens[name].classList.add("active");
   }
 
-  const opts = {
+  var opts = {
     strictAccents: true,
     allowEnyeAsN: true,
     lenientPunct: true,
-    showHints: true,
+    showHints: true
   };
 
-  function loadOptions() {
+  function loadOptions(){
     opts.strictAccents = $("#optStrictAccents").checked;
     opts.allowEnyeAsN = $("#optAllowEnyeAsN").checked;
     opts.lenientPunct = $("#optLenientPunct").checked;
     opts.showHints = $("#optShowHints").checked;
   }
 
-  ["#optStrictAccents","#optAllowEnyeAsN","#optLenientPunct","#optShowHints"].forEach(id=>{
-    $(id).addEventListener("change", loadOptions);
+  $all("#optStrictAccents,#optAllowEnyeAsN,#optLenientPunct,#optShowHints").forEach(function(el){
+    el.addEventListener("change", loadOptions);
   });
 
-  function escapeHtml(s) {
-    return s.replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"})[ch]);
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(ch){
+      return ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"})[ch];
+    });
   }
 
-  const ACCENT_MAP = new Map([
-    ["á","a"],["é","e"],["í","i"],["ó","o"],["ú","u"],["ü","u"],
-    ["Á","A"],["É","E"],["Í","I"],["Ó","O"],["Ú","U"],["Ü","U"],
-  ]);
+  var ACCENT_MAP = {
+    "á":"a","é":"e","í":"i","ó":"o","ú":"u","ü":"u",
+    "Á":"A","É":"E","Í":"I","Ó":"O","Ú":"U","Ü":"U"
+  };
 
-  function stripAccents(s) {
-    return s.split("").map(ch => ACCENT_MAP.get(ch) ?? ch).join("");
-  }
-
-  function normalize(s, {strictAccents, allowEnyeAsN, lenientPunct}) {
-    let out = (s ?? "").trim();
-    if (lenientPunct) out = out.replace(/[¿?¡!.,;:()\[\]{}"“”'’]/g, " ");
-    out = out.replace(/\s+/g, " ").trim().toLowerCase();
-    if (allowEnyeAsN) out = out.replace(/ñ/g, "n");
-    if (!strictAccents) out = stripAccents(out);
+  function stripAccents(s){
+    var out = "";
+    for (var i=0;i<s.length;i++){
+      var ch = s.charAt(i);
+      out += (ACCENT_MAP[ch] || ch);
+    }
     return out;
   }
 
-  function parseAlternatives(raw) {
-    const cleaned = raw.trim();
-    const parts = cleaned.split("/").map(s => s.trim()).filter(Boolean);
-    return (parts.length <= 1) ? [cleaned] : parts;
-  }
+  function normalize(s){
+    var out = (s == null ? "" : String(s)).trim();
 
-  function isMatch(user, expectedRaw) {
-    const userN = normalize(user, opts);
-    const alternatives = parseAlternatives(expectedRaw).map(x => normalize(x, opts));
-    return alternatives.some(a => a === userN);
-  }
-
-  function tokenSimilarity(a, b) {
-    const A = new Set(normalize(a, opts).split(" ").filter(Boolean));
-    const B = new Set(normalize(b, opts).split(" ").filter(Boolean));
-    if (A.size === 0 && B.size === 0) return 1;
-    let inter = 0;
-    for (const x of A) if (B.has(x)) inter++;
-    const uni = A.size + B.size - inter;
-    return uni === 0 ? 0 : inter / uni;
-  }
-
-  const STOPWORDS = new Set([
-    "el","la","los","las","un","una","unos","unas","y","o","a","de","del","al","que","en","por","para","con","sin",
-    "es","estoy","estas","esta","está","son","soy","eres","se","me","te","mi","tu","su","sus","lo","le","les",
-    "ya","muy","más","mas","pero","porque","como","cuando","donde","qué","si","no","sí","pues","bueno"
-  ]);
-
-  function mulberry32(a) {
-    return function() {
-      let t = a += 0x6D2B79F5;
-      t = Math.imul(t ^ t >>> 15, t | 1);
-      t ^= t + Math.imul(t ^ t >>> 7, t | 61);
-      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    if (opts.lenientPunct){
+      out = out.replace(/[¿?¡!.,;:()\[\]{}"“”'’]/g, " ");
     }
+    out = out.replace(/\s+/g, " ").trim().toLowerCase();
+
+    if (opts.allowEnyeAsN){
+      out = out.replace(/ñ/g, "n");
+    }
+    if (!opts.strictAccents){
+      out = stripAccents(out);
+    }
+    return out;
   }
 
-  function escapeForTag(s) {
-    return String(s).replace(/\]/g, "\\]");
+  function parseAlternatives(raw){
+    var cleaned = String(raw || "").trim();
+    var parts = cleaned.split("/").map(function(x){ return x.trim(); }).filter(Boolean);
+    return parts.length <= 1 ? [cleaned] : parts;
   }
 
-  function makeCloze(text, blanksWanted, seed) {
-    const rng = mulberry32(seed);
-    const tokens = text.split(/(\s+)/);
-    const candidates = [];
+  function isMatch(user, expectedRaw){
+    var u = normalize(user);
+    var alts = parseAlternatives(expectedRaw).map(function(x){ return normalize(x); });
+    for (var i=0;i<alts.length;i++){
+      if (alts[i] === u) return true;
+    }
+    return false;
+  }
 
-    for (let i=0;i<tokens.length;i++) {
-      const t = tokens[i];
+  function tokenSimilarity(a,b){
+    var A = normalize(a).split(" ").filter(Boolean);
+    var B = normalize(b).split(" ").filter(Boolean);
+    if (!A.length && !B.length) return 1;
+
+    var setA = {};
+    var setB = {};
+    var i;
+
+    for (i=0;i<A.length;i++) setA[A[i]] = true;
+    for (i=0;i<B.length;i++) setB[B[i]] = true;
+
+    var inter = 0, uni = 0;
+    for (var k in setA){ if (setA.hasOwnProperty(k)){ uni++; if (setB[k]) inter++; } }
+    for (var k2 in setB){ if (setB.hasOwnProperty(k2) && !setA[k2]) uni++; }
+
+    return uni === 0 ? 0 : inter/uni;
+  }
+
+  var STOPWORDS = {
+    "el":1,"la":1,"los":1,"las":1,"un":1,"una":1,"unos":1,"unas":1,"y":1,"o":1,"a":1,"de":1,"del":1,"al":1,
+    "que":1,"en":1,"por":1,"para":1,"con":1,"sin":1,"es":1,"estoy":1,"estas":1,"esta":1,"está":1,"son":1,
+    "soy":1,"eres":1,"se":1,"me":1,"te":1,"mi":1,"tu":1,"su":1,"sus":1,"lo":1,"le":1,"les":1,"ya":1,"muy":1,
+    "más":1,"mas":1,"pero":1,"porque":1,"como":1,"cuando":1,"donde":1,"qué":1,"si":1,"no":1,"sí":1,"pues":1,"bueno":1
+  };
+
+  function mulberry32(a){
+    return function(){
+      var t = a += 0x6D2B79F5;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  // Very compatible "word" check: Spanish letters only
+  var SP_WORD = /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+$/;
+
+  function makeCloze(text, blanksWanted, seed){
+    var rng = mulberry32(seed);
+    var tokens = String(text).split(/(\s+)/); // keep spaces
+    var candidates = [];
+
+    for (var i=0;i<tokens.length;i++){
+      var t = tokens[i];
       if (/^\s+$/.test(t)) continue;
-      const w = t.replace(/[¿?¡!.,;:()\[\]{}"“”'’]/g,"").trim();
+
+      var w = t.replace(/[¿?¡!.,;:()\[\]{}"“”'’]/g, "").trim();
       if (!w) continue;
-      if (!/^[\p{L}áéíóúüñÁÉÍÓÚÜÑ]+(?:[\p{L}áéíóúüñÁÉÍÓÚÜÑ]+)?$/u.test(w)) continue;
+      if (!SP_WORD.test(w)) continue;
 
-      const wn = normalize(w, {...opts, strictAccents:false});
+      var wn = normalize(w);
       if (wn.length <= 3) continue;
-      if (STOPWORDS.has(wn)) continue;
-      candidates.push({idx:i, raw:w});
+      if (STOPWORDS[wn]) continue;
+
+      candidates.push({ idx:i, raw:w });
     }
 
-    for (let i=candidates.length-1;i>0;i--) {
-      const j = Math.floor(rng()*(i+1));
-      [candidates[i], candidates[j]] = [candidates[j], candidates[i]];
+    // shuffle
+    for (var j=candidates.length-1;j>0;j--){
+      var k = Math.floor(rng()*(j+1));
+      var tmp = candidates[j]; candidates[j]=candidates[k]; candidates[k]=tmp;
     }
 
-    const chosen = candidates.slice(0, Math.max(0, blanksWanted));
-    const chosenIdx = new Set(chosen.map(c=>c.idx));
+    var chosen = candidates.slice(0, Math.max(0, blanksWanted));
+    var chosenIdx = {};
+    for (var c=0;c<chosen.length;c++) chosenIdx[chosen[c].idx] = true;
 
-    const out = tokens.map((t,i)=>{
-      if (!chosenIdx.has(i)) return t;
-      const ans = t.replace(/^\W+|\W+$/g,"").trim();
-      return `[[BLANK:${escapeForTag(ans)}]]`;
-    }).join("");
+    var out = "";
+    for (var n=0;n<tokens.length;n++){
+      if (!chosenIdx[n]) { out += tokens[n]; continue; }
+      var ans = tokens[n].replace(/^\W+|\W+$/g,"").trim();
+      out += "[[BLANK:" + ans.replace(/\]/g,"\\]") + "]]";
+    }
 
     return { templ: out };
   }
 
-  function splitTemplate(templ) {
-    const parts = [];
-    const re = /\[\[BLANK:([^\]]+)\]\]/g;
-    let last = 0;
-    let m;
-    while ((m = re.exec(templ)) !== null) {
+  function splitTemplate(templ){
+    var parts = [];
+    var re = /\[\[BLANK:([^\]]+)\]\]/g;
+    var last = 0, m;
+    while ((m = re.exec(templ)) !== null){
       if (m.index > last) parts.push(templ.slice(last, m.index));
       parts.push({ blank: m[1] });
       last = re.lastIndex;
@@ -268,7 +282,7 @@ ready(() => {
     return parts;
   }
 
-  let current = {
+  var current = {
     situation: null,
     level: 1,
     seed: 12345,
@@ -276,139 +290,118 @@ ready(() => {
     timerId: null,
     blanks: [],
     hintsUsed: 0,
-    lastResult: null,
+    lastResult: null
   };
 
-  function formatTime(ms) {
-    const s = Math.max(0, Math.floor(ms/1000));
-    const m = Math.floor(s/60);
-    const r = s%60;
-    return `${m}:${String(r).padStart(2,"0")}`;
+  function formatTime(ms){
+    var s = Math.max(0, Math.floor(ms/1000));
+    var m = Math.floor(s/60);
+    var r = s%60;
+    return m + ":" + String(r).padStart(2,"0");
   }
 
-  function startTimer() {
+  function startTimer(){
     current.startMs = performance.now();
     if (current.timerId) clearInterval(current.timerId);
-    current.timerId = setInterval(()=>{
+    current.timerId = setInterval(function(){
       $("#time").textContent = formatTime(performance.now()-current.startMs);
     }, 250);
   }
 
-  function stopTimer() {
+  function stopTimer(){
     if (current.timerId) clearInterval(current.timerId);
     current.timerId = null;
   }
 
-  function calcLiveScore() {
-    const total = current.blanks.length;
-    let correct = 0;
-
-    for (const b of current.blanks) {
-      const val = b.input?.value ?? "";
-      if (b.mode === "inline") {
+  function calcLiveScore(){
+    var total = current.blanks.length;
+    var correct = 0;
+    for (var i=0;i<current.blanks.length;i++){
+      var b = current.blanks[i];
+      var val = (b.input && b.input.value) ? b.input.value : "";
+      if (b.mode === "inline"){
         if (isMatch(val, b.expected)) correct++;
       } else {
-        const sim = tokenSimilarity(val, b.expectedFull);
+        var sim = tokenSimilarity(val, b.expectedFull);
         if (sim >= b.simThreshold) correct++;
       }
     }
-
-    const elapsed = (performance.now()-current.startMs)/1000;
-    const accuracy = total ? correct/total : 0;
-    const speedBonus = Math.max(0, Math.floor(220 - elapsed));
-
-    let score = Math.round(correct*20 + accuracy*120 + speedBonus);
-    score -= current.hintsUsed * 6;
-
-    return {score: Math.max(0, score), correct, total, accuracy};
+    var elapsed = (performance.now()-current.startMs)/1000;
+    var accuracy = total ? correct/total : 0;
+    var speedBonus = Math.max(0, Math.floor(220 - elapsed));
+    var score = Math.round(correct*20 + accuracy*120 + speedBonus) - current.hintsUsed*6;
+    return { score: Math.max(0, score), correct: correct, total: total, accuracy: accuracy };
   }
 
-  function updateProgress() {
-    const total = current.blanks.length;
-    let filled = 0;
-    for (const b of current.blanks) {
-      const v = (b.input?.value ?? "").trim();
+  function updateProgress(){
+    var total = current.blanks.length;
+    var filled = 0;
+    for (var i=0;i<current.blanks.length;i++){
+      var v = (current.blanks[i].input && current.blanks[i].input.value) ? current.blanks[i].input.value.trim() : "";
       if (v) filled++;
     }
-    const pct = total ? (filled/total)*100 : 0;
-    $("#progressFill").style.width = `${pct}%`;
-    $("#progressText").textContent = `${filled} / ${total}`;
+    var pct = total ? (filled/total)*100 : 0;
+    $("#progressFill").style.width = pct + "%";
+    $("#progressText").textContent = filled + " / " + total;
     $("#liveScore").textContent = String(calcLiveScore().score);
   }
 
-  function buildHome() {
-    const grid = $("#situationGrid");
+  // HOME: render situations with level buttons right there
+  function buildHome(){
+    var grid = $("#situationGrid");
     grid.innerHTML = "";
-    DATA.situations.forEach((s)=>{
-      const turns = s.turns.length;
-      const youLines = s.turns.filter(t=>t.speaker==="YOU").length;
 
-      const btn = document.createElement("button");
-      btn.className = "sitBtn";
-      btn.innerHTML = `
-        <div class="sitTitle">${escapeHtml(s.title)}</div>
-        <div class="sitMeta">${turns} lines · ${youLines} YOU lines</div>
-        <div class="row" style="margin-top:10px">
-          ${[1,2,3,4,5].map(l=>`<span class="pill">Level ${l}</span>`).join("")}
-        </div>
-      `;
-      btn.addEventListener("click", ()=> openLevelPicker(s.id));
-      grid.appendChild(btn);
+    DATA.situations.forEach(function(s){
+      var youLines = s.turns.filter(function(t){ return t.speaker === "YOU"; }).length;
+
+      var card = document.createElement("div");
+      card.className = "sitCard";
+      card.innerHTML =
+        '<div class="sitTitle">' + escapeHtml(s.title) + '</div>' +
+        '<div class="sitMeta">' + s.turns.length + ' lines · ' + youLines + ' YOU lines</div>' +
+        '<div class="levelRow">' +
+          [1,2,3,4,5].map(function(l){
+            return '<button class="levelBtn" type="button" data-sit="'+s.id+'" data-lvl="'+l+'">Level ' + l + '</button>';
+          }).join("") +
+        '</div>';
+
+      grid.appendChild(card);
+    });
+
+    // one listener for all level buttons
+    grid.addEventListener("click", function(e){
+      var btn = e.target.closest(".levelBtn");
+      if (!btn) return;
+      var sitId = btn.getAttribute("data-sit");
+      var lvl = parseInt(btn.getAttribute("data-lvl"), 10);
+      startGame(sitId, lvl);
     });
   }
 
-  function levelDescription(lvl) {
-    if (lvl===1) return "Easy: a few missing words";
-    if (lvl===2) return "Medium: more blanks per line";
-    if (lvl===3) return "Hard: lots of blanks";
-    if (lvl===4) return "Very hard: write the whole line (with keyword cues)";
-    return "Boss: write the whole line (no cues)";
+  var activeBlankId = 0;
+  function setActiveBlank(id){ activeBlankId = id; }
+
+  function makeCues(text){
+    var words = normalize(text).split(" ").filter(Boolean);
+    var content = words.filter(function(w){ return w.length>3 && !STOPWORDS[w]; });
+    var unique = [];
+    for (var i=0;i<content.length;i++){
+      if (unique.indexOf(content[i]) === -1) unique.push(content[i]);
+    }
+    unique = unique.slice(0,6);
+    return unique.length ? unique.join(" · ") : "(no cues)";
   }
 
-  function openLevelPicker(sitId) {
-    const s = DATA.situations.find(x=>x.id===sitId);
-    $("#modalTitle").textContent = "Choose level";
-    $("#modalBody").innerHTML = `
-      <div class="muted" style="margin-bottom:10px">${escapeHtml(s.title)}</div>
-      <div class="grid">
-        ${[1,2,3,4,5].map(l=>`
-          <button class="sitBtn" data-level="${l}">
-            <div class="sitTitle">Level ${l}</div>
-            <div class="sitMeta">${levelDescription(l)}</div>
-          </button>
-        `).join("")}
-      </div>
-    `;
-    $("#modal").classList.remove("hidden");
-    $$("#modalBody [data-level]").forEach(btn=>{
-      btn.addEventListener("click", ()=>{
-        const lvl = Number(btn.getAttribute("data-level"));
-        $("#modal").classList.add("hidden");
-        startGame(sitId, lvl);
-      });
-    });
-  }
-
-  let activeBlankId = 0;
-  function setActiveBlank(id) { activeBlankId = id; }
-
-  function makeCues(text) {
-    const words = normalize(text, {...opts, strictAccents:false, lenientPunct:true}).split(" ").filter(Boolean);
-    const content = words.filter(w => w.length>3 && !STOPWORDS.has(w));
-    const cues = Array.from(new Set(content)).slice(0, 6);
-    return cues.length ? cues.join(" · ") : "(no cues)";
-  }
-
-  function startGame(sitId, level) {
+  function startGame(sitId, level){
     loadOptions();
-    current.situation = DATA.situations.find(x=>x.id===sitId);
+    current.situation = DATA.situations.find(function(x){ return x.id === sitId; });
     current.level = level;
     current.seed = Date.now() % 1000000;
     current.blanks = [];
     current.hintsUsed = 0;
     current.lastResult = null;
 
-    $("#playKicker").textContent = `${current.situation.title} · Level ${level}`;
+    $("#playKicker").textContent = current.situation.title + " · Level " + level;
     $("#playTitle").textContent = current.situation.title;
     $("#playDesc").textContent = (level <= 3)
       ? "Fill in the missing parts of the green “YOU” lines."
@@ -420,87 +413,79 @@ ready(() => {
     updateProgress();
   }
 
-  function buildChat() {
-    const chat = $("#chat");
+  function buildChat(){
+    var chat = $("#chat");
     chat.innerHTML = "";
-    const turns = current.situation.turns;
+    var turns = current.situation.turns;
+    var globalBlankIndex = 0;
 
-    let globalBlankIndex = 0;
+    turns.forEach(function(t, idx){
+      var bubble = document.createElement("div");
+      bubble.className = "bubble " + (t.speaker === "E" ? "examiner" : "you");
 
-    turns.forEach((t, idx)=>{
-      const bubble = document.createElement("div");
-      bubble.className = "bubble " + (t.speaker==="E" ? "examiner" : "you");
-
-      const top = document.createElement("div");
+      var top = document.createElement("div");
       top.className = "bubbleTop";
-      top.innerHTML = `
-        <span class="badge ${t.speaker==="E" ? "e" : "you"}">${t.speaker==="E" ? "EXAMINER" : "YOU"}</span>
-        <span class="mini">Line ${idx+1}</span>
-      `;
+      top.innerHTML =
+        '<span class="badge ' + (t.speaker === "E" ? "e" : "you") + '">' + (t.speaker === "E" ? "EXAMINER" : "YOU") + '</span>' +
+        '<span class="mini">Line ' + (idx+1) + '</span>';
       bubble.appendChild(top);
 
-      const line = document.createElement("div");
+      var line = document.createElement("div");
       line.className = "lineText";
       line.textContent = t.text;
       bubble.appendChild(line);
 
-      if (t.speaker === "YOU") {
-        if (current.level <= 3) {
-          const blanksWanted = (current.level===1) ? 2 : (current.level===2 ? 4 : 6);
-          const {templ} = makeCloze(t.text, blanksWanted, current.seed + idx*97);
-          const parts = splitTemplate(templ);
+      if (t.speaker === "YOU"){
+        if (current.level <= 3){
+          var blanksWanted = (current.level===1) ? 2 : (current.level===2 ? 4 : 6);
+          var templObj = makeCloze(t.text, blanksWanted, current.seed + idx*97);
+          var parts = splitTemplate(templObj.templ);
 
-          const wrap = document.createElement("div");
+          var wrap = document.createElement("div");
           wrap.className = "blanks";
 
-          parts.forEach((p)=>{
-            if (typeof p === "string") {
-              const span = document.createElement("span");
+          parts.forEach(function(p){
+            if (typeof p === "string"){
+              var span = document.createElement("span");
               span.textContent = p;
               wrap.appendChild(span);
             } else {
-              const blankWrap = document.createElement("span");
+              var blankWrap = document.createElement("span");
               blankWrap.className = "blankWrap";
 
-              const input = document.createElement("input");
+              var input = document.createElement("input");
               input.className = "blank";
-              input.setAttribute("data-blank-idx", String(globalBlankIndex));
-              input.setAttribute("placeholder", "…");
+              input.setAttribute("placeholder","…");
               input.autocomplete = "off";
               input.spellcheck = false;
 
-              const expected = p.blank;
+              var expected = p.blank;
 
-              const hintBtn = document.createElement("button");
+              var hintBtn = document.createElement("button");
               hintBtn.className = "btn hintBtn ghost";
+              hintBtn.type = "button";
               hintBtn.textContent = "Hint";
-              const hintText = document.createElement("span");
+
+              var hintText = document.createElement("span");
               hintText.className = "hintText";
               hintText.textContent = "";
 
               if (!opts.showHints) hintBtn.style.display = "none";
 
-              hintBtn.addEventListener("click", ()=>{
+              hintBtn.addEventListener("click", function(){
                 current.hintsUsed += 1;
-                const alts = parseAlternatives(expected);
-                const primary = alts[0];
-                const clean = primary.trim();
-                const first = clean.slice(0, clean.length>6 ? 2 : 1);
-                hintText.textContent = ` ${first}… (${clean.length})`;
+                var alts = parseAlternatives(expected);
+                var clean = alts[0].trim();
+                var first = clean.slice(0, clean.length>6 ? 2 : 1);
+                hintText.textContent = " " + first + "… (" + clean.length + ")";
                 hintBtn.disabled = true;
                 updateProgress();
               });
 
               input.addEventListener("input", updateProgress);
-              input.addEventListener("focus", ()=> setActiveBlank(globalBlankIndex));
+              input.addEventListener("focus", function(){ setActiveBlank(globalBlankIndex); });
 
-              current.blanks.push({
-                id: globalBlankIndex,
-                mode: "inline",
-                expected,
-                input,
-                lineIndex: idx,
-              });
+              current.blanks.push({ id: globalBlankIndex, mode:"inline", expected: expected, input: input, lineIndex: idx });
               globalBlankIndex++;
 
               blankWrap.appendChild(input);
@@ -511,39 +496,31 @@ ready(() => {
           });
 
           bubble.appendChild(wrap);
+
         } else {
-          const input = document.createElement("textarea");
-          input.className = "blank";
-          input.rows = 2;
-          input.style.width = "100%";
-          input.style.maxWidth = "860px";
-          input.style.minHeight = "54px";
-          input.placeholder = (current.level===4)
-            ? "Type/say the full response (use the cues below)…"
-            : "Type/say the full response…";
-          input.autocomplete = "off";
-          input.spellcheck = false;
+          var ta = document.createElement("textarea");
+          ta.className = "blank";
+          ta.rows = 2;
+          ta.style.width = "100%";
+          ta.style.maxWidth = "900px";
+          ta.style.minHeight = "54px";
+          ta.placeholder = (current.level===4) ? "Type/say the full response (use the cues below)…" : "Type/say the full response…";
+          ta.autocomplete = "off";
+          ta.spellcheck = false;
 
-          input.addEventListener("input", updateProgress);
-          input.addEventListener("focus", ()=> setActiveBlank(globalBlankIndex));
+          ta.addEventListener("input", updateProgress);
+          ta.addEventListener("focus", function(){ setActiveBlank(globalBlankIndex); });
 
-          bubble.appendChild(input);
+          bubble.appendChild(ta);
 
-          if (current.level===4) {
-            const cue = document.createElement("div");
+          if (current.level===4){
+            var cue = document.createElement("div");
             cue.className = "cue";
             cue.textContent = "Cues: " + makeCues(t.text);
             bubble.appendChild(cue);
           }
 
-          current.blanks.push({
-            id: globalBlankIndex,
-            mode: "full",
-            expectedFull: t.text,
-            simThreshold: 0.86,
-            input,
-            lineIndex: idx,
-          });
+          current.blanks.push({ id: globalBlankIndex, mode:"full", expectedFull: t.text, simThreshold: 0.86, input: ta, lineIndex: idx });
           globalBlankIndex++;
         }
       }
@@ -552,129 +529,127 @@ ready(() => {
     });
   }
 
-  function speak(text) {
-    if (!("speechSynthesis" in window)) {
+  function speak(text){
+    if (!("speechSynthesis" in window)){
       alert("Text-to-speech is not supported in this browser.");
       return;
     }
     window.speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
+    var u = new SpeechSynthesisUtterance(text);
     u.lang = "es-ES";
     u.rate = 1.0;
     window.speechSynthesis.speak(u);
   }
 
-  function readExaminerOnly() {
-    const lines = current.situation.turns.filter(t=>t.speaker==="E").map(t=>t.text);
+  function readExaminerOnly(){
+    var lines = current.situation.turns.filter(function(t){ return t.speaker==="E"; }).map(function(t){ return t.text; });
     speak(lines.join(" ... "));
   }
-  function readAll() {
-    const lines = current.situation.turns.map(t => (t.speaker==="E" ? "Examinador: " : "Tú: ") + t.text);
+  function readAll(){
+    var lines = current.situation.turns.map(function(t){
+      return (t.speaker==="E" ? "Examinador: " : "Tú: ") + t.text;
+    });
     speak(lines.join(" ... "));
   }
 
-  function startVoiceFill() {
-    const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!Rec) {
+  function startVoiceFill(){
+    var Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!Rec){
       alert("Voice input isn't supported in this browser. Try Chrome or Edge.");
       return;
     }
-    const rec = new Rec();
+    var rec = new Rec();
     rec.lang = "es-ES";
     rec.interimResults = false;
     rec.maxAlternatives = 1;
 
-    const target = current.blanks.find(b => b.id === activeBlankId) ?? current.blanks[0];
+    var target = current.blanks.find(function(b){ return b.id === activeBlankId; }) || current.blanks[0];
     if (!target) return;
 
-    rec.onresult = (ev) => {
-      const text = ev.results?.[0]?.[0]?.transcript ?? "";
-      if (target.input) {
-        target.input.value = text.trim();
+    rec.onresult = function(ev){
+      var text = (ev.results && ev.results[0] && ev.results[0][0]) ? ev.results[0][0].transcript : "";
+      if (target.input){
+        target.input.value = String(text).trim();
         target.input.dispatchEvent(new Event("input"));
         target.input.focus();
       }
     };
-    rec.onerror = () => alert("Voice input error. Check mic permissions and try again.");
+    rec.onerror = function(){ alert("Voice input error. Check mic permissions and try again."); };
     rec.start();
   }
 
-  function grade() {
+  function grade(){
     stopTimer();
-    const elapsedMs = performance.now() - current.startMs;
-    const total = current.blanks.length;
+    var elapsedMs = performance.now() - current.startMs;
+    var total = current.blanks.length;
+    var correct = 0;
+    var results = [];
 
-    let correct = 0;
-    const results = [];
-
-    for (const b of current.blanks) {
-      const given = (b.input?.value ?? "").trim();
-      if (b.mode === "inline") {
-        const ok = isMatch(given, b.expected);
+    current.blanks.forEach(function(b){
+      var given = (b.input && b.input.value) ? b.input.value.trim() : "";
+      if (b.mode === "inline"){
+        var ok = isMatch(given, b.expected);
         if (ok) correct++;
-        results.push({mode:"inline", expected:b.expected, given, ok, lineIndex:b.lineIndex});
+        results.push({ mode:"inline", expected:b.expected, given: given, ok: ok, lineIndex: b.lineIndex });
       } else {
-        const sim = tokenSimilarity(given, b.expectedFull);
-        const ok = sim >= b.simThreshold;
-        if (ok) correct++;
-        results.push({mode:"full", expected:b.expectedFull, given, ok, sim, lineIndex:b.lineIndex});
+        var sim = tokenSimilarity(given, b.expectedFull);
+        var ok2 = sim >= b.simThreshold;
+        if (ok2) correct++;
+        results.push({ mode:"full", expected:b.expectedFull, given: given, ok: ok2, sim: sim, lineIndex: b.lineIndex });
       }
-    }
+    });
 
-    const accuracy = total ? correct/total : 0;
-    const score = Math.max(0, Math.round(calcLiveScore().score));
-    return {score, elapsedMs, accuracy, results, correct, total, hintsUsed: current.hintsUsed};
+    var accuracy = total ? correct/total : 0;
+    var score = Math.max(0, Math.round(calcLiveScore().score));
+    return { score: score, elapsedMs: elapsedMs, accuracy: accuracy, results: results, correct: correct, total: total, hintsUsed: current.hintsUsed };
   }
 
-  function renderCorrections(payload) {
-    const byLine = new Map();
-    for (const r of payload.results) {
-      const arr = byLine.get(r.lineIndex) ?? [];
-      arr.push(r);
-      byLine.set(r.lineIndex, arr);
-    }
+  function renderCorrections(payload){
+    var byLine = {};
+    payload.results.forEach(function(r){
+      if (!byLine[r.lineIndex]) byLine[r.lineIndex] = [];
+      byLine[r.lineIndex].push(r);
+    });
 
-    const turns = current.situation.turns;
-    const wrap = document.createElement("div");
+    var wrap = document.createElement("div");
 
-    turns.forEach((t, idx)=>{
+    current.situation.turns.forEach(function(t, idx){
       if (t.speaker !== "YOU") return;
-      const block = document.createElement("div");
+
+      var lineRs = byLine[idx] || [];
+      var okAll = lineRs.length ? lineRs.every(function(x){ return x.ok; }) : false;
+
+      var your = (current.level <= 3)
+        ? lineRs.map(function(x){ return x.given; }).join(" ").trim()
+        : (lineRs[0] ? lineRs[0].given : "");
+
+      var block = document.createElement("div");
       block.className = "correction";
-      const lineRs = byLine.get(idx) ?? [];
-      const okAll = lineRs.length ? lineRs.every(x=>x.ok) : false;
+      block.innerHTML =
+        '<div><span class="'+(okAll ? "good":"bad")+'">'+(okAll ? "✓":"✗")+'</span> <strong>YOU</strong> · Line '+(idx+1)+'</div>' +
+        '<div class="mini" style="margin-top:6px">Model answer:</div>' +
+        '<div style="margin-top:4px">'+escapeHtml(t.text)+'</div>' +
+        '<div class="mini" style="margin-top:8px">Your answer:</div>' +
+        '<div style="margin-top:4px">'+escapeHtml(your)+'</div>';
 
-      const your = (current.level <= 3)
-        ? (lineRs.map(x=>x.given).join(" ").trim())
-        : (lineRs[0]?.given ?? "");
-
-      block.innerHTML = `
-        <div><span class="${okAll ? "good":"bad"}">${okAll ? "✓" : "✗"}</span>
-          <strong>YOU</strong> · Line ${idx+1}
-        </div>
-        <div class="mini" style="margin-top:6px">Model answer:</div>
-        <div style="margin-top:4px">${escapeHtml(t.text)}</div>
-        <div class="mini" style="margin-top:8px">Your answer:</div>
-        <div style="margin-top:4px">${escapeHtml(your)}</div>
-      `;
-
-      if (current.level <= 3) {
-        const bads = lineRs.filter(x=>!x.ok);
-        if (bads.length) {
-          const ul = document.createElement("ul");
+      if (current.level <= 3){
+        var bads = lineRs.filter(function(x){ return !x.ok; });
+        if (bads.length){
+          var ul = document.createElement("ul");
           ul.className = "mini";
           ul.style.marginTop = "8px";
-          ul.innerHTML = bads.map(b=>`<li><span class="bad">Missing:</span> <strong>${escapeHtml(b.expected)}</strong></li>`).join("");
+          ul.innerHTML = bads.map(function(b){
+            return '<li><span class="bad">Missing:</span> <strong>'+escapeHtml(b.expected)+'</strong></li>';
+          }).join("");
           block.appendChild(ul);
         }
       } else {
-        const r0 = lineRs[0];
-        if (r0) {
-          const sim = Math.round((r0.sim ?? 0) * 100);
-          const p = document.createElement("div");
+        if (lineRs[0]){
+          var simPct = Math.round((lineRs[0].sim || 0)*100);
+          var p = document.createElement("div");
           p.className = "mini";
           p.style.marginTop = "8px";
-          p.innerHTML = `Similarity: <strong>${sim}%</strong> (needs ~86%+)`;
+          p.innerHTML = 'Similarity: <strong>'+simPct+'%</strong> (needs ~86%+)';
           block.appendChild(p);
         }
       }
@@ -686,10 +661,10 @@ ready(() => {
     $("#corrections").appendChild(wrap);
   }
 
-  function onSubmit() {
-    const payload = grade();
+  function onSubmit(){
+    var payload = grade();
     $("#finalScore").textContent = String(payload.score);
-    $("#finalAcc").textContent = `${Math.round(payload.accuracy*100)}%`;
+    $("#finalAcc").textContent = String(Math.round(payload.accuracy*100)) + "%";
     $("#finalTime").textContent = formatTime(payload.elapsedMs);
     $("#finalHints").textContent = String(payload.hintsUsed);
 
@@ -698,118 +673,107 @@ ready(() => {
     showScreen("results");
   }
 
-  function keyForScores() {
-    return `rp_scores_v1::${current.situation.id}::L${current.level}`;
+  function keyForScores(){
+    return "rp_scores_v2::" + current.situation.id + "::L" + current.level;
   }
 
-  function saveScore() {
-    const name = ($("#playerName").value || "").trim().slice(0,18) || "Anonymous";
-    const payload = current.lastResult;
+  function saveScore(){
+    var name = ($("#playerName").value || "").trim().slice(0,18) || "Anonymous";
+    var payload = current.lastResult;
     if (!payload) return;
 
-    const item = { name, score: payload.score, timeMs: payload.elapsedMs, acc: payload.accuracy, when: Date.now() };
-    const key = keyForScores();
-    const existing = JSON.parse(localStorage.getItem(key) || "[]");
+    var item = { name:name, score:payload.score, timeMs:payload.elapsedMs, acc:payload.accuracy, when:Date.now() };
+    var key = keyForScores();
+    var existing = JSON.parse(localStorage.getItem(key) || "[]");
     existing.push(item);
-    existing.sort((a,b)=> b.score - a.score || a.timeMs - b.timeMs);
+    existing.sort(function(a,b){
+      return (b.score - a.score) || (a.timeMs - b.timeMs);
+    });
     localStorage.setItem(key, JSON.stringify(existing.slice(0,10)));
     alert("Saved! Check High Scores.");
   }
 
-  function showHighScores() {
-    const rows = [];
-    for (const s of DATA.situations) {
-      for (let lvl=1; lvl<=5; lvl++) {
-        const key = `rp_scores_v1::${s.id}::L${lvl}`;
-        const list = JSON.parse(localStorage.getItem(key) || "[]");
+  function showHighScores(){
+    var rows = [];
+    DATA.situations.forEach(function(s){
+      for (var lvl=1; lvl<=5; lvl++){
+        var key = "rp_scores_v2::" + s.id + "::L" + lvl;
+        var list = JSON.parse(localStorage.getItem(key) || "[]");
         if (!list.length) continue;
-        list.slice(0,5).forEach((r, idx)=>{
+        list.slice(0,5).forEach(function(r, idx){
           rows.push({
-            sit: s.title, lvl,
-            rank: idx+1,
-            name: r.name,
-            score: r.score,
-            time: formatTime(r.timeMs),
-            acc: Math.round(r.acc*100) + "%"
+            sit: s.title, lvl: lvl, rank: idx+1, name: r.name,
+            score: r.score, time: formatTime(r.timeMs), acc: Math.round(r.acc*100) + "%"
           });
         });
       }
-    }
-    rows.sort((a,b)=> b.score - a.score);
+    });
 
-    $("#modalTitle").textContent = "High Scores (local device)";
-    $("#modalBody").innerHTML = rows.length ? `
-      <div class="mini muted" style="margin-bottom:10px">Top results saved on this device/browser only.</div>
-      <div style="overflow:auto">
-        <table style="width:100%; border-collapse:collapse; font-size:13px">
-          <thead>
-            <tr>
-              <th style="text-align:left; padding:8px; border-bottom:1px solid var(--line)">Situation</th>
-              <th style="text-align:left; padding:8px; border-bottom:1px solid var(--line)">Level</th>
-              <th style="text-align:left; padding:8px; border-bottom:1px solid var(--line)">Rank</th>
-              <th style="text-align:left; padding:8px; border-bottom:1px solid var(--line)">Name</th>
-              <th style="text-align:left; padding:8px; border-bottom:1px solid var(--line)">Score</th>
-              <th style="text-align:left; padding:8px; border-bottom:1px solid var(--line)">Time</th>
-              <th style="text-align:left; padding:8px; border-bottom:1px solid var(--line)">Acc</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${rows.map(r=>`
-              <tr>
-                <td style="padding:8px; border-bottom:1px solid var(--line)">${escapeHtml(r.sit)}</td>
-                <td style="padding:8px; border-bottom:1px solid var(--line)">${r.lvl}</td>
-                <td style="padding:8px; border-bottom:1px solid var(--line)">${r.rank}</td>
-                <td style="padding:8px; border-bottom:1px solid var(--line)">${escapeHtml(r.name)}</td>
-                <td style="padding:8px; border-bottom:1px solid var(--line)"><strong>${r.score}</strong></td>
-                <td style="padding:8px; border-bottom:1px solid var(--line)">${r.time}</td>
-                <td style="padding:8px; border-bottom:1px solid var(--line)">${r.acc}</td>
-              </tr>
-            `).join("")}
-          </tbody>
-        </table>
-      </div>
-    ` : `<div class="muted">No scores saved yet. Finish a run and save your score.</div>`;
+    rows.sort(function(a,b){ return b.score - a.score; });
+
+    $("#modalTitle").textContent = "High Scores (this device)";
+    $("#modalBody").innerHTML = rows.length ? (
+      '<div class="mini muted" style="margin-bottom:10px">Scores saved on this device/browser only.</div>' +
+      '<div style="overflow:auto">' +
+      '<table style="width:100%; border-collapse:collapse; font-size:13px">' +
+        '<thead><tr>' +
+          '<th style="text-align:left; padding:8px; border-bottom:1px solid var(--line)">Situation</th>' +
+          '<th style="text-align:left; padding:8px; border-bottom:1px solid var(--line)">Level</th>' +
+          '<th style="text-align:left; padding:8px; border-bottom:1px solid var(--line)">Rank</th>' +
+          '<th style="text-align:left; padding:8px; border-bottom:1px solid var(--line)">Name</th>' +
+          '<th style="text-align:left; padding:8px; border-bottom:1px solid var(--line)">Score</th>' +
+          '<th style="text-align:left; padding:8px; border-bottom:1px solid var(--line)">Time</th>' +
+          '<th style="text-align:left; padding:8px; border-bottom:1px solid var(--line)">Acc</th>' +
+        '</tr></thead>' +
+        '<tbody>' +
+          rows.map(function(r){
+            return '<tr>' +
+              '<td style="padding:8px; border-bottom:1px solid var(--line)">' + escapeHtml(r.sit) + '</td>' +
+              '<td style="padding:8px; border-bottom:1px solid var(--line)">' + r.lvl + '</td>' +
+              '<td style="padding:8px; border-bottom:1px solid var(--line)">' + r.rank + '</td>' +
+              '<td style="padding:8px; border-bottom:1px solid var(--line)">' + escapeHtml(r.name) + '</td>' +
+              '<td style="padding:8px; border-bottom:1px solid var(--line)"><strong>' + r.score + '</strong></td>' +
+              '<td style="padding:8px; border-bottom:1px solid var(--line)">' + r.time + '</td>' +
+              '<td style="padding:8px; border-bottom:1px solid var(--line)">' + r.acc + '</td>' +
+            '</tr>';
+          }).join("") +
+        '</tbody>' +
+      '</table></div>'
+    ) : '<div class="muted">No scores saved yet.</div>';
 
     $("#modal").classList.remove("hidden");
   }
 
-  function showHow() {
-    $("#modalTitle").textContent = "How it works";
-    $("#modalBody").innerHTML = `
-      <div class="mini muted" style="margin-bottom:10px">Designed for Leaving Cert Spanish role play practice.</div>
-      <ul style="margin:0; padding-left:18px; line-height:1.6">
-        <li><strong>Pick a situation</strong> then choose <strong>Level 1–5</strong>.</li>
-        <li>Green bubbles are <strong>YOU</strong> (what students practise).</li>
-        <li>Levels 1–3: fill missing words. Levels 4–5: write/say the full line.</li>
-        <li><strong>Hints</strong> reveal the first letter(s) but reduce score slightly.</li>
-        <li><strong>Voice input</strong> fills the currently focused blank/box (best in Chrome/Edge).</li>
-        <li><strong>High scores</strong> are stored on this device (localStorage).</li>
-      </ul>
-    `;
+  function showHow(){
+    $("#modalTitle").textContent = "How to play";
+    $("#modalBody").innerHTML =
+      '<ol style="margin:0; padding-left:18px; line-height:1.7">' +
+        '<li>Pick a situation on the Home screen.</li>' +
+        '<li>Click Level 1–5 to start.</li>' +
+        '<li>Fill blanks (Levels 1–3) or write the full line (Levels 4–5).</li>' +
+        '<li>Press Submit to get score + corrections.</li>' +
+        '<li>Save score if you want to appear on High Scores (this device).</li>' +
+      '</ol>';
     $("#modal").classList.remove("hidden");
   }
 
-  // Wire up
-  $("#btnHome").addEventListener("click", ()=>{ stopTimer(); showScreen("home"); });
-  $("#btnHome2").addEventListener("click", ()=>{ stopTimer(); showScreen("home"); });
+  // Wire buttons
+  $("#btnHome").addEventListener("click", function(){ stopTimer(); showScreen("home"); });
+  $("#btnHome2").addEventListener("click", function(){ stopTimer(); showScreen("home"); });
   $("#btnHow").addEventListener("click", showHow);
   $("#btnScores").addEventListener("click", showHighScores);
-  $("#btnCloseModal").addEventListener("click", ()=> $("#modal").classList.add("hidden"));
-  $("#modal").addEventListener("click", (e)=>{ if (e.target.id==="modal") $("#modal").classList.add("hidden"); });
+  $("#btnCloseModal").addEventListener("click", function(){ $("#modal").classList.add("hidden"); });
+  $("#modal").addEventListener("click", function(e){ if (e.target && e.target.id === "modal") $("#modal").classList.add("hidden"); });
 
   $("#btnSpeakExaminer").addEventListener("click", readExaminerOnly);
   $("#btnSpeakAll").addEventListener("click", readAll);
   $("#btnVoice").addEventListener("click", startVoiceFill);
   $("#btnSubmit").addEventListener("click", onSubmit);
 
-  $("#btnRetry").addEventListener("click", ()=>{
-    const sitId = current.situation.id;
-    const lvl = current.level;
-    startGame(sitId, lvl);
+  $("#btnRetry").addEventListener("click", function(){
+    startGame(current.situation.id, current.level);
   });
   $("#btnSaveScore").addEventListener("click", saveScore);
-
-  window.addEventListener("beforeunload", ()=>{ try{ window.speechSynthesis?.cancel(); }catch{} });
 
   // init
   loadOptions();
