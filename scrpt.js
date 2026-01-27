@@ -3,19 +3,16 @@
 var DATA = {
   "meta": { "source": "Sits for game.docx", "created": "2026-01-14" },
   "situations": [
-    {"id":"s1","title":"SITUACIÓN 1: ALOJAMIENTO — The examiner is a receptionist / owner of a hotel. You are a tourist. You want to stay for 2 nights. There are no rooms. Ask for alternatives. Agree on a price. Ask about breakfast. Thank and say goodbye.","turns":[
-      {"speaker":"E","text":"Buenos días. ¿Qué quiere?"},
-      {"speaker":"YOU","text":"Hola, me gustaría una habitación doble con baño para dos noches, por favor."},
-      {"speaker":"E","text":"Lo siento, pero no hay habitaciones disponibles."},
-      {"speaker":"YOU","text":"¿De verdad? ¿No hay ninguna habitación libre? ¿Quizás tiene una habitación individual?"},
-      {"speaker":"E","text":"No, lo siento, pero el hotel está completo."},
-      {"speaker":"YOU","text":"¡Qué pena! ¿Puede recomendarme otro hotel cerca de aquí, por favor?"},
-      {"speaker":"E","text":"Sí, claro. Hay un hotel al lado del banco. Se llama “El Sol”."},
-      {"speaker":"YOU","text":"Gracias. ¿Es caro?"},
-      {"speaker":"E","text":"No, no es muy caro. Son noventa euros por noche."},
-      {"speaker":"YOU","text":"Bueno, está bien. ¿Y el desayuno está incluido en el precio?"},
-      {"speaker":"E","text":"Sí, está incluido."},
-      {"speaker":"YOU","text":"Perfecto. Muchísimas gracias por su ayuda. ¡Adiós!"}
+    {"id":"s1","title":"SITUACIÓN 1: ALOJAMIENTO","turns":[
+      {"speaker":"E","text":"Hola, dígame."},
+      {"speaker":"YOU","text":"Voy a estar/ estaré en su universidad el año academico que viene de Erasmus."},
+      {"speaker":"YOU","text":"Es qué, como no conozco a nadie en Caceres, me pregunto si usted me podría dar algun consejo sobre/acerca de Alojamiento."},
+      {"speaker":"E","text":"¿En qué parte de la ciudad querrías vivir?"},
+      {"speaker":"YOU","text":"Bueno, preferiría vivir (bastante) cerca de la universidad, porque el año pasado vivía en las afueras de Dublin, y no me gustaba mucho la verdad."},
+      {"speaker":"E","text":"¿Por qué?"},
+      {"speaker":"YOU","text":"Pues, pasé demasiado tiempo viajando porque estaba muy lejos de todo. En el quinto pimiento, como dicen. JAJA. Si podría utilizar este tiempo en mis estudios/ estudiando, creo que mis notas mejorarían."},
+      {"speaker":"E","text":"Tienes razón. Pero sabes que Cáceres es una ciudad muy pequeña y se puede andar desde las afueras a la Plaza Mayor en media hora."},
+      {"speaker":"YOU","text":"Pues eso no está lejos, la verdad, y cómo el clima es mejor que el de irlanda, consideraré toda la ciudad, aunque todavía/ aún preferiría vivir en el centro."}
     ]},
     {"id":"s2","title":"SITUACIÓN 2: PORTÁTIL ROTO — The examiner is a receptionist / assistant in an electronics shop. You are a customer. Your laptop is broken. Explain the problem. Ask if it can be repaired. Ask how long it will take. Ask about the price. Thank and say goodbye.","turns":[
       {"speaker":"E","text":"Buenos días. ¿En qué puedo ayudarle?"},
