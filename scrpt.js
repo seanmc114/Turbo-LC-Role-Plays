@@ -5,8 +5,7 @@ var DATA = {
   "situations": [
     {"id":"s1","title":"SITUACIÓN 1: ALOJAMIENTO","turns":[
       {"speaker":"E","text":"Hola, dígame."},
-      {"speaker":"YOU","text":"Voy a estar/ estaré en su universidad el año academico que viene de Erasmus."},
-      {"speaker":"YOU","text":"Es qué, como no conozco a nadie en Caceres, me pregunto si usted me podría dar algun consejo sobre/acerca de Alojamiento."},
+      {"speaker":"YOU","text":"Voy a estar/ estaré en su universidad el año academico que viene de Erasmus. Es qué, como no conozco a nadie en Caceres, me pregunto si usted me podría dar algun consejo sobre/acerca deAlojamiento."},
       {"speaker":"E","text":"¿En qué parte de la ciudad querrías vivir?"},
       {"speaker":"YOU","text":"Bueno, preferiría vivir (bastante) cerca de la universidad, porque el año pasado vivía en las afueras de Dublin, y no me gustaba mucho la verdad."},
       {"speaker":"E","text":"¿Por qué?"},
